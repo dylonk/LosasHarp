@@ -158,7 +158,7 @@ class HarpString {
   }
 }
 
-
+//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
 //AUDIO API STUFF
 
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -179,7 +179,7 @@ function playSound(soundId) {
 
 
 
-
+const pressedKeys = new Set();
 document.addEventListener('keydown', function(event) {
     if(!audioContext){audioContext = new AudioContext();} 
     audioContext.resume();
