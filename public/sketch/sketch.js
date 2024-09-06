@@ -5,6 +5,24 @@ const movingcanvas = document.getElementById('movingcanvas');
 const ctx = canvas.getContext('2d');
 const ctx2 = movingcanvas.getContext('2d');
 
+
+function bigger() {
+  zoom = zoom + 0.1;
+  width = 100 / zoom;
+  document.body.style.transformOrigin = "left top";
+  document.body.style.transform = "scale(" + zoom + ")";
+  document.body.style.width = width + "%";
+}
+function smaller() {
+  zoom = zoom - 0.1;
+  width = 100 / zoom;
+  document.body.style.transformOrigin = "left top";
+  document.body.style.transform = "scale(" + zoom + ")";
+  document.body.style.width = width + "%";
+}
+smaller();
+smaller()
+;
 //initialization of global variables
 stringwidth=5;
 let strings = [];
