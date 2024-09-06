@@ -5,6 +5,8 @@ const movingcanvas = document.getElementById('movingcanvas');
 const ctx = canvas.getContext('2d');
 const ctx2 = movingcanvas.getContext('2d');
 
+var zoom = 1;
+var width = 100;
 
 function bigger() {
   zoom = zoom + 0.1;
@@ -21,8 +23,8 @@ function smaller() {
   document.body.style.width = width + "%";
 }
 smaller();
-smaller()
-;
+smaller();
+
 //initialization of global variables
 stringwidth=5;
 let strings = [];

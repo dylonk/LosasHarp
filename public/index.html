@@ -18,8 +18,7 @@
 </body>
 
 
-var zoom = 1;
-var width = 100;
+
 
 
 
@@ -41,109 +40,4 @@ var width = 100;
 <script src="node_modules/p5/lib/p5.js"></script>
 <script src="sketch/sketch.js"></script>
 
-
-
-deltaTime=0;
-
-
-
-
-
-
-// Load and draw images
-
-
-
-
-
-
-
-//DRAWING STRINGS INDIVIDUALLY, MORE SENSITIVE
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// EXAMPLE!
-/*
-var sprite = new Sprite({
-    spriteSheetURL: 'https://codehs.com/uploads/72e9b6f60ac412f32a2fd3a955990c3b',
-    nRows: 2,
-    nCols: 3,
-    spriteWidth: 13,
-    spriteHeight: 14,
-    borderWidth: 1,
-    spacingWidth: 1,
-    x: 10
-    y: 10
-});
-sprite.onReady(function() {
-    add(sprite);
-    sprite.addAnimation({
-        name: 'walkright',
-        frameIndices: [0,1,2,1]
-    });
-    sprite.addAnimation({
-        name: 'walkleft',
-        frameIndices: [3,4,5,4]
-    });
-    
-    startLoop();
-});
-
-function startLoop() {
-    var velocity = 1;
-    sprite.animate('walkright');
-    
-    setInterval(function() {
-        if (sprite.activeFrame.x +
-            sprite.activeFrame.width >= getWidth()
-        ) {
-            velocity = -1;
-            sprite.animate('walkleft', true);
-        }
-        if (sprite.activeFrame.x <= 0) {
-            velocity = 1;
-            sprite.animate('walkright', true);
-        }
-        sprite.move(velocity, 0);
-    }, 10);
-}
-    */
-</script>
 </html>
