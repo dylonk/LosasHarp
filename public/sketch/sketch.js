@@ -34,26 +34,26 @@ let images = [];
 const imagePaths = [
   "exporthere\\landbg.png",
   "exporthere\\bigharp_frame_only.png",
-
-  "exporthere\\phone_text_battery.png", 
-  "exporthere\\bigharp_buttons_toplayer.png", //last image loaded in draw function, all other images must be loaded in other functions.  
-  "exporthere\\discord_white_bg.png",
-  "exporthere\\phonegray.png",
   "exporthere\\phonecameratop.png",
+  "exporthere\\phone_blue_toplayer.png",
+  "exporthere\\bigharp_buttons_toplayer.png",
+  //last image loaded in draw function, all other images must be loaded in other functions.  
   "exporthere\\phonehomescreen_blank.png",
   "exporthere\\full_ineeri_darkbg.png",
   "exporthere\\full_ineeri_isolated_text.png",
+  "exporthere\\discord_white_bg.png",
   "exporthere\\full_kollei_darkbg.png",
   "exporthere\\full_kollei_isolated_text.png",
   "exporthere\\ineeri_red_bg.png",
   "exporthere\\kollei_red_bg.png",
-  "exporthere\\phone_blue_toplayer.png",
+  "exporthere\\phone_text_battery.png", 
   "exporthere\\phone_discord_bg.png",
   "exporthere\\phone_discord_gray.png",
   "exporthere\\phone_discord_red.png",
   "exporthere\\phone_icons_isolated.png",
   "exporthere\\phone_icons_text_combo.png",
   "exporthere\\phone_icons_text_isolated.png",
+  "exporthere\\phonegray.png",
 ];
 
 
@@ -94,16 +94,15 @@ function draw() {
   // Draw images first
   let x = 0;
   let y = 0;
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 4; i++) {
     image(images[i], x, y); // Adjust size and position as needed 
   }
-
-
+  //displays harp strings
   for (let string of strings) {
     string.display();
   }
 
-  image(images[4], x, y); //loads harp buttons
+  image(images[4], x, y); //loads harp buttons after strings
 }
 
 
@@ -270,39 +269,60 @@ document.addEventListener('keyup', function(event) {
 });
 
 
-//PHONE CONTROLS
-function changeBackground(imageUrl) {
-  const screen = document.getElementById('screen');
-  screen.style.backgroundImage = `url(${imageUrl})`;
-}
-const phone = document.getElementById('phone');
 const screen = document.getElementById('screen');
-
+let bgSize=800;
 let isDragging = false;
-let startY;
-let scrollTop;
+let startY;// initial mouse position
+let initialBackgroundPositionY;//initial position of the background image
+let maxScrollY; 
 
-phone.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  startY = e.pageY - phone.offsetTop;
-  scrollTop = screen.scrollTop;
-  console.log("should be dragging");
+//PHONE CONTROLS
+//changeBackground loads a new image utl as
+function changeBackground(imageUrl,newBgSize) {
+  screen.style.backgroundImage = `url(${imageUrl})`;
+  bgSize=newBgSize;
+  console.log(newBgSize);
+  screen.style.backgroundPositionY=0;
+}
+
+
+
+screen.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startY = e.pageY;
+    // Extract the current background position Y
+    initialBackgroundPositionY = parseInt(window.getComputedStyle(screen).backgroundPositionY, 10);
+    maxScrollY = bgSize*-1;
+    console.log("should be dragging");
+    console.log(bgSize);
 });
 
-phone.addEventListener('mouseleave', () => {
+document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+        const deltaY = e.pageY - startY;  //deltaY is mouse movement
+        // Update the background position Y
+        let newBackgroundPositionY = initialBackgroundPositionY + deltaY; 
+        console.log("max Scroll is " + bgSize+"new backrgound position is " + newBackgroundPositionY);
+        if (newBackgroundPositionY < 0) {     //if the new background position is greater than 0, set it to 0
+          newBackgroundPositionY = 0;
+      } else if (newBackgroundPositionY > maxScrollY) {
+          newBackgroundPositionY = maxScrollY;
+      }
+      screen.style.backgroundPositionY = `${initialBackgroundPositionY + deltaY}px`;
+
+    }
+    
+});
+
+document.addEventListener('mouseup', () => {
+  if(isDragging){
+    const currentBackgroundPositionY = parseInt(window.getComputedStyle(screen).backgroundPositionY, 10);
+  if (currentBackgroundPositionY > 0) {   //if the background is too far up, slingshot it back down
+    screen.style.backgroundPositionY = '0px';
+} else if (currentBackgroundPositionY < maxScrollY) { //if the background is too far down, slingshot it back up
+    screen.style.backgroundPositionY = `${maxScrollY}px`;
+}
+
+  }
   isDragging = false;
-});
-
-phone.addEventListener('mouseup', () => {
-  isDragging = false;
-});
-
-phone.addEventListener('mousemove', (e) => {
-  if (!isDragging) return;
-  e.preventDefault();
-  const y = e.pageY - phone.offsetTop;
-  const walk = (y - startY) * 2; // Adjust scroll speed
-  screen.scrollTop = scrollTop - walk;
-
-  console.log(screen.scrollTop);
 });

@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Loader</title>
     <style>
+        body{overflow:hidden;}
         #canvas {
             border: 1px solid black;
             background: transparent;
         }
         #canvas-container {
-        position: absolute;
+        position: fixed;
         z-index: 1;
         width: 1700px;
         height: 800px;
@@ -21,7 +22,7 @@
             width: 800px;
             height: 1000px;
             top: 0px;
-            left:800px;
+            left:850px;
             z-index: 2;
             border: 10px solid black;
             border-radius: 30px;
@@ -37,9 +38,21 @@
             position: relative;
             top: 0;
             left: 0;
-            background-image: url('exporthere\\phonehomescreen_blank.png')!important; /* Set your screen image here */
+            background-image: url('exporthere\\phone_discord_bg.png'); /* Set your screen image here */
+            background-color: darkblue;
             background-size: cover;
+            background-attachment: scroll;
+            background-position:0,0;
+            transition: background-position 0.3s ease-out;
+            background-repeat:no-repeat;
             z-index: 3;
+        }
+        .image-button {
+            width: 100px; /* Set the desired width */
+            height:100px; /* Set the desired height */
+            background-size: cover; /* Ensure the image covers the entire button */
+            border: none; /* Remove default button border */
+            cursor: pointer; /* Change cursor to pointer on hover */
         }
     </style>
 </head>
@@ -48,10 +61,9 @@
         <canvas id="canvas" width="1700" height="800"></canvas>
         <div id="phone">
             <div id="screen">
-                <!-- Your content here -->
+                <button id="ineeriButton" class="image-button" style="background-image: url('exporthere\\ineeri_icon.png');" onclick="changeBackground('exporthere/full_ineeri_isolated_text.png',4000)"></button>
+                <button id="kolleiButton" class="image-button" style="background-image: url('exporthere\\kollei_icon.png');" onclick="changeBackground('exporthere/full_kollei_isolated_text.png',1100)"></button>
             </div>
-            <button onclick="changeBackground('path/to/app1.jpg')">App 1</button>
-            <button onclick="changeBackground('path/to/app2.jpg')">App 2</button>
         </div>
     </div>
 
