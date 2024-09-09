@@ -1,9 +1,7 @@
 
 
 const canvas = document.getElementById('canvas');
-const movingcanvas = document.getElementById('movingcanvas');
 const ctx = canvas.getContext('2d');
-const ctx2 = movingcanvas.getContext('2d');
 
 var zoom = 1;
 var width = 100;
@@ -25,6 +23,7 @@ function smaller() {
 smaller();
 smaller();
 
+
 //initialization of global variables
 stringwidth=5;
 let strings = [];
@@ -35,12 +34,13 @@ let images = [];
 const imagePaths = [
   "exporthere\\landbg.png",
   "exporthere\\bigharp_frame_only.png",
-  "exporthere\\phonegray.png",
-  "exporthere\\phonecameratop.png",
-  "exporthere\\phonehomescreen_blank.png",
+
   "exporthere\\phone_text_battery.png", 
   "exporthere\\bigharp_buttons_toplayer.png", //last image loaded in draw function, all other images must be loaded in other functions.  
   "exporthere\\discord_white_bg.png",
+  "exporthere\\phonegray.png",
+  "exporthere\\phonecameratop.png",
+  "exporthere\\phonehomescreen_blank.png",
   "exporthere\\full_ineeri_darkbg.png",
   "exporthere\\full_ineeri_isolated_text.png",
   "exporthere\\full_kollei_darkbg.png",
@@ -61,7 +61,7 @@ const imagePaths = [
 
 //PRELOAD LOADS ALL IMAGES, IDS THEM ACCORDINGLY AND DRAWS THE FIRST 5.
 function preload() {
-  // Loads all images
+   //Loads all images
   for (let i = 0; i < imagePaths.length; i++) {
     thisImage=loadImage(imagePaths[i]);
     thisImage.id="Image " + i;
@@ -90,11 +90,11 @@ function setup() {
 
 
 function draw() {
-  background(255);
+  //background(255);
   // Draw images first
   let x = 0;
   let y = 0;
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 2; i++) {
     image(images[i], x, y); // Adjust size and position as needed 
   }
 
@@ -103,24 +103,10 @@ function draw() {
     string.display();
   }
 
-  image(images[6], x, y); //loads harp buttons
+  image(images[4], x, y); //loads harp buttons
 }
 
-//CLICK AND DRAG
-let drag = false;
-document.addEventListener(
-    'mousedown', () => drag = false);
 
-document.addEventListener(
-    'mousemove', () => drag = true);
-
-document.addEventListener(
-    'mouseup', () => console.log(
-        drag ? 'drag' : 'click'));
-
-
-
-  
 
 class HarpString {
   constructor(x, y, height) {
@@ -199,7 +185,16 @@ function playSound(soundId) {
 
 
 
+
+
+
+
+
 const pressedKeys = new Set();
+
+
+
+//HARP CONTROLS
 document.addEventListener('keydown', function(event) {
     if(!audioContext){audioContext = new AudioContext();} 
     audioContext.resume();
@@ -266,13 +261,48 @@ document.addEventListener('keydown', function(event) {
         sound = document.getElementById('c6');  
         playSound(sound);
 }
-
-
-
 });
 
 document.addEventListener('keyup', function(event) {
   const keyReleased = event.key;
   // Remove the key from the set of pressed keys
   pressedKeys.delete(keyReleased);
+});
+
+
+//PHONE CONTROLS
+function changeBackground(imageUrl) {
+  const screen = document.getElementById('screen');
+  screen.style.backgroundImage = `url(${imageUrl})`;
+}
+const phone = document.getElementById('phone');
+const screen = document.getElementById('screen');
+
+let isDragging = false;
+let startY;
+let scrollTop;
+
+phone.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  startY = e.pageY - phone.offsetTop;
+  scrollTop = screen.scrollTop;
+  console.log("should be dragging");
+});
+
+phone.addEventListener('mouseleave', () => {
+  isDragging = false;
+});
+
+phone.addEventListener('mouseup', () => {
+  isDragging = false;
+});
+
+phone.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  e.preventDefault();
+  const y = e.pageY - phone.offsetTop;
+  const walk = (y - startY) * 2; // Adjust scroll speed
+  screen.scrollTop = scrollTop - walk;
+
+  console.log(screen.scrollTop);
 });

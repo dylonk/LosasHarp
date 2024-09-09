@@ -7,37 +7,70 @@
     <style>
         #canvas {
             border: 1px solid black;
+            background: transparent;
+        }
+        #canvas-container {
+        position: absolute;
+        z-index: 1;
+        width: 1700px;
+        height: 800px;
+        overflow: hidden; /* Hides overflowing content */
+        border: 1px solid black;
+}
+        #phone {
+            width: 800px;
+            height: 1000px;
+            top: 0px;
+            left:800px;
+            z-index: 2;
+            border: 10px solid black;
+            border-radius: 30px;
+            overflow: hidden;
+            position: absolute;
+
+            background-size: cover;
+        }
+        #screen {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            top: 0;
+            left: 0;
+            background-image: url('exporthere\\phonehomescreen_blank.png')!important; /* Set your screen image here */
+            background-size: cover;
+            z-index: 3;
         }
     </style>
 </head>
 <body>
-    <div style="position: relative;">
-        <canvas id="canvas" width="1700" height="800" style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
-        <canvas id="movingcanvas" width="1700" height="800" style="position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
+    <div id="canvas-container">
+        <canvas id="canvas" width="1700" height="800"></canvas>
+        <div id="phone">
+            <div id="screen">
+                <!-- Your content here -->
+            </div>
+            <button onclick="changeBackground('path/to/app1.jpg')">App 1</button>
+            <button onclick="changeBackground('path/to/app2.jpg')">App 2</button>
+        </div>
     </div>
+
+    <audio id="a#5" src="Harp Notes/aH5.wav" preload="auto"></audio>
+    <audio id="a5" src="Harp Notes/a5.wav" preload="auto"></audio>
+    <audio id="b5" src="Harp Notes/b5.wav" preload="auto"></audio>
+    <audio id="c#5" src="Harp Notes/cH5.wav" preload="auto"></audio>
+    <audio id="c5" src="Harp Notes/c5.wav" preload="auto"></audio>
+    <audio id="c6" src="Harp Notes/c6.wav" preload="auto"></audio>
+    <audio id="d#5" src="Harp Notes/dH5.wav" preload="auto"></audio>
+    <audio id="d5" src="Harp Notes/d5.wav" preload="auto"></audio>
+    <audio id="e5" src="Harp Notes/e5.wav" preload="auto"></audio>
+    <audio id="f#5" src="Harp Notes/fH5.wav" preload="auto"></audio>
+    <audio id="f5" src="Harp Notes/f5.wav" preload="auto"></audio>
+    <audio id="g#5" src="Harp Notes/gH5.wav" preload="auto"></audio>
+    <audio id="g5" src="Harp Notes/g5.wav" preload="auto"></audio>
+
+    <script src="node_modules/p5/lib/p5.js"></script>
+    <script src="sketch/sketch.js"></script>
+
 </body>
-
-
-
-
-
-
-<audio id="a#5" src="Harp Notes/aH5.wav" preload="auto"></audio>
-<audio id="a5" src="Harp Notes/a5.wav" preload="auto"></audio>
-<audio id="b5" src="Harp Notes/b5.wav" preload="auto"></audio>
-<audio id="c#5" src="Harp Notes/cH5.wav" preload="auto"></audio>
-<audio id="c5" src="Harp Notes/c5.wav" preload="auto"></audio>
-<audio id="c6" src="Harp Notes/c6.wav" preload="auto"></audio>
-<audio id="d#5" src="Harp Notes/dH5.wav" preload="auto"></audio>
-<audio id="d5" src="Harp Notes/d5.wav" preload="auto"></audio>
-<audio id="e5" src="Harp Notes/e5.wav" preload="auto"></audio>
-<audio id="f#5" src="Harp Notes/fH5.wav" preload="auto"></audio>
-<audio id="f5" src="Harp Notes/f5.wav" preload="auto"></audio>
-<audio id="g#5" src="Harp Notes/gH5.wav" preload="auto"></audio>
-<audio id="g5" src="Harp Notes/g5.wav" preload="auto"></audio>
-
-
-<script src="node_modules/p5/lib/p5.js"></script>
-<script src="sketch/sketch.js"></script>
-
 </html>
