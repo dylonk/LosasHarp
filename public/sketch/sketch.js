@@ -3,6 +3,7 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
+
 var zoom = 1;
 var width = 100;
 
@@ -23,6 +24,11 @@ function smaller() {
 smaller();
 smaller();
 
+function hide(toHide) {
+  thisdiv = document.getElementyById(toHide);
+  thisdiv.style.display = 'none';
+}
+
 
 //initialization of global variables
 stringwidth=5;
@@ -37,23 +43,23 @@ const imagePaths = [
   "exporthere\\phonecameratop.png",
   "exporthere\\phone_blue_toplayer.png",
   "exporthere\\bigharp_buttons_toplayer.png",
-  //last image loaded in draw function, all other images must be loaded in other functions.  
+  "exporthere\\ineeri_red_bg.png",  //images [5]
+  "exporthere\\kollei_red_bg.png",
+  //last image drawn in draw function, all other images must be drawn as needed.  
   "exporthere\\phonehomescreen_blank.png",
   "exporthere\\full_ineeri_darkbg.png",
   "exporthere\\full_ineeri_isolated_text.png",
-  "exporthere\\discord_white_bg.png",
+  "exporthere\\discord_white_bg.png", //images[10]
   "exporthere\\full_kollei_darkbg.png",
   "exporthere\\full_kollei_isolated_text.png",
-  "exporthere\\ineeri_red_bg.png",
-  "exporthere\\kollei_red_bg.png",
   "exporthere\\phone_text_battery.png", 
   "exporthere\\phone_discord_bg.png",
-  "exporthere\\phone_discord_gray.png",
+  "exporthere\\phone_discord_gray.png", //images[15]
   "exporthere\\phone_discord_red.png",
   "exporthere\\phone_icons_isolated.png",
   "exporthere\\phone_icons_text_combo.png",
   "exporthere\\phone_icons_text_isolated.png",
-  "exporthere\\phonegray.png",
+  "exporthere\\phonegray.png",  //images[20]
 ];
 
 
@@ -64,7 +70,7 @@ function preload() {
    //Loads all images
   for (let i = 0; i < imagePaths.length; i++) {
     thisImage=loadImage(imagePaths[i]);
-    thisImage.id="Image " + i;
+    //thisImage.id=imagePaths[i];
     images[i] = thisImage;
     console.log("Image " + i + " loaded?");
   }
@@ -101,6 +107,7 @@ function draw() {
   for (let string of strings) {
     string.display();
   }
+
 
   image(images[4], x, y); //loads harp buttons after strings
 }
@@ -269,36 +276,91 @@ document.addEventListener('keyup', function(event) {
 });
 
 
-const screen = document.getElementById('screen');
+
+
+//PHONE CONTROLS
+//apps are handled with all apps technically being there at once, only expanding and unexpanding to fit the screen when opened
+const trollian=document.getElementById('trollian'); 
+const homeScreen= document.getElementById('homeScreen'); 
+openApp('homeScreen');
+
 let bgSize=800;
-let isDragging = false;
+let isDraggingMessage = false;
 let startY;// initial mouse position
 let initialBackgroundPositionY;//initial position of the background image
 let maxScrollY; 
+let currentMessage;
+let currentMessageFrame;
 
-//PHONE CONTROLS
-//changeBackground loads a new image utl as
-function changeBackground(imageUrl,newBgSize) {
-  screen.style.backgroundImage = `url(${imageUrl})`;
+
+
+function openApp(newApp)
+{
+  currentApp=document.getElementById(newApp);
+  currentApp.classList.add('expanded');
+
+}
+
+
+//TROLLIAN CONTROLS
+//openMessage loads a new image url, resets backgroundposition, and should set the trollian window to visible
+function openMessage(newMessage,newMessageFrame,newBgSize) {
+  currentMessage=document.getElementById(newMessage); //sets currentMessage to correct message 
+  currentMessageFrame=document.getElementById(newMessageFrame);  //setscurrent MessageFrame to the new frame
   bgSize=newBgSize;
+  currentMessageFrame.classList.add('expanded');//expands the current message frame, and the message within
   console.log(newBgSize);
-  screen.style.backgroundPositionY=0;
+  currentMessage.style.backgroundPositionY=0;
+  console.log(currentMessage.id);
+  if (currentMessage) {
+    currentMessage.addEventListener('mousedown', handleMouseDown);
+}
+trollian.classList.remove('expanded')
+}
+
+function closeMessage() {
+  currentMessageFrame.classList.remove('expanded');
+  currentMessage=null; //sets currentMessage to correct message 
+  currentMessageFrame=null;  //setscurrent MessageFrame to the new frame
+  bgSize=null;
+  trollian.classList.add('expanded')
+}
+function closeApp() {
+  currentApp.classList.remove('expanded');
+  currentApp=null; //sets currentMessage to correct message 
+  currentMessageFrame=null;  //setscurrent MessageFrame to the new frame
+  bgSize=null;
 }
 
 
 
-screen.addEventListener('mousedown', (e) => {
-    isDragging = true;
+/*
+currentMessage.addEventListener('mousedown', (e) => {
+    isDraggingMessage = true;
     startY = e.pageY;
     // Extract the current background position Y
-    initialBackgroundPositionY = parseInt(window.getComputedStyle(screen).backgroundPositionY, 10);
+    initialBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
     maxScrollY = bgSize*-1;
-    console.log("should be dragging");
+    console.log("dragging Message");
     console.log(bgSize);
+    if (currentMessage) {
+      currentMessage.addEventListener('mousedown', handleMouseDown);
+  }
 });
+*/
 
+function handleMouseDown(e) {
+  isDraggingMessage = true;
+  startY = e.pageY;
+  initialBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
+  maxScrollY = bgSize * -1;
+  console.log("dragging Message");
+  console.log(bgSize);
+}
+//below three functions allow for the scrolling of trollian
 document.addEventListener('mousemove', (e) => {
-    if (isDragging) {
+    if (isDraggingMessage) {
+      requestAnimationFrame(() => {
         const deltaY = e.pageY - startY;  //deltaY is mouse movement
         // Update the background position Y
         let newBackgroundPositionY = initialBackgroundPositionY + deltaY; 
@@ -308,21 +370,21 @@ document.addEventListener('mousemove', (e) => {
       } else if (newBackgroundPositionY > maxScrollY) {
           newBackgroundPositionY = maxScrollY;
       }
-      screen.style.backgroundPositionY = `${initialBackgroundPositionY + deltaY}px`;
-
+      currentMessage.style.backgroundPositionY = `${initialBackgroundPositionY + deltaY}px`;  
+    });
     }
     
 });
 
 document.addEventListener('mouseup', () => {
-  if(isDragging){
-    const currentBackgroundPositionY = parseInt(window.getComputedStyle(screen).backgroundPositionY, 10);
+  if(isDraggingMessage){
+    const currentBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
   if (currentBackgroundPositionY > 0) {   //if the background is too far up, slingshot it back down
-    screen.style.backgroundPositionY = '0px';
+    currentMessage.style.backgroundPositionY = '0px';
 } else if (currentBackgroundPositionY < maxScrollY) { //if the background is too far down, slingshot it back up
-    screen.style.backgroundPositionY = `${maxScrollY}px`;
+    currentMessage.style.backgroundPositionY = `${maxScrollY}px`;
 }
 
   }
-  isDragging = false;
+  isDraggingMessage = false;
 });

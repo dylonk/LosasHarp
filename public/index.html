@@ -6,9 +6,98 @@
     <title>Image Loader</title>
     <style>
         body{overflow:hidden;}
+        :root 
+        {
+            --transition-duration: .5s;
+            --expanded-width: 100%;
+            --expanded-height: 100%;
+        }
         #canvas {
             border: 1px solid black;
             background: transparent;
+        }
+
+
+        .back-button {
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        position: relative;
+        }
+
+        .back-button::before,
+        .back-button::after {
+        content: '';
+        position: absolute;
+        width: 15px;
+        height: 3px;
+        background-color: black;
+    }
+
+    .back-button::before {
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%) rotate(45deg);
+    }
+
+    .back-button::after {
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%) rotate(-45deg);
+    }
+
+        .smoothOpen
+        {
+            transition: width var(--transition-duration), height var(--transition-duration);
+        }
+        
+        .app
+        {
+            position:relative;
+            z-index: 5;
+            overflow: hidden;
+            width:0%;
+            height:0%;
+            transform: translate(-100%, -100%);
+        }
+        .message
+        {
+            width: 100%;
+            height: 100%;
+            position: inherit;
+            z-index: 5;
+            background-size: cover;
+            background-attachment: scroll;
+            background-position:0,0;
+            transition: background-position 0.3s ease-out;
+            background-repeat:no-repeat;
+
+        }
+        .messageFrame
+        {
+            width: 0%;
+            height: 0%;
+            position:relative;
+            z-index: 10;
+            transform: translate(-100%, -100%);
+            background-color: transparent;
+            background-repeat: no-repeat;
+            overflow: hidden;
+
+        }
+        .expanded 
+        {
+            width: var(--expanded-width);
+            height: var(--expanded-height);
+            transform: translate(0, 0);
+        }
+        .app.expanded 
+        {
+            width: var(--expanded-width);
+            height: var(--expanded-height);
+            transform: translate(0, 0);
         }
         #canvas-container {
         position: fixed;
@@ -19,40 +108,62 @@
         border: 1px solid black;
 }
         #phone {
-            width: 800px;
+            width: 780px;
             height: 1000px;
             top: 0px;
-            left:850px;
-            z-index: 2;
-            border: 10px solid black;
+            left:870px;
+            z-index: 1;
+            border: 5px solid black;
             border-radius: 30px;
             overflow: hidden;
             position: absolute;
 
             background-size: cover;
         }
+        #trollian {
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #homescreen {
+            background-image: url('exporthere\\phonehomescreen_blank.png');
+            background-size: 100% 100%;
+            width: 100%;
+            height: 100%;
+        }
         #screen {
             width: 100%;
             height: 100%;
+            background-size: 100% 100%;
             overflow: hidden;
             position: relative;
+            background-repeat: no-repeat;
             top: 0;
-            left: 0;
-            background-image: url('exporthere\\phone_discord_bg.png'); /* Set your screen image here */
-            background-color: darkblue;
-            background-size: cover;
-            background-attachment: scroll;
-            background-position:0,0;
-            transition: background-position 0.3s ease-out;
-            background-repeat:no-repeat;
-            z-index: 3;
+            left: 0; /* Set your screen image here */
+            background-color: rgb(62, 62, 81);
+
+            z-index: 2;
         }
-        .image-button {
-            width: 100px; /* Set the desired width */
-            height:100px; /* Set the desired height */
+        .app-button
+        {
+            width: 14%;
+            height: 10%;
             background-size: cover; /* Ensure the image covers the entire button */
             border: none; /* Remove default button border */
             cursor: pointer; /* Change cursor to pointer on hover */
+            background-color: transparent;
+            transition: width var(--transition-duration), height var(--transition-duration);
+        }
+        .image-button {
+            width: 14%;
+            height: 10%;
+            background-size: cover; /* Ensure the image covers the entire button */
+            border: none; /* Remove default button border */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            background-color: transparent;
+            transition: width var(--transition-duration), height var(--transition-duration);
         }
     </style>
 </head>
@@ -60,13 +171,34 @@
     <div id="canvas-container">
         <canvas id="canvas" width="1700" height="800"></canvas>
         <div id="phone">
-            <div id="screen">
-                <button id="ineeriButton" class="image-button" style="background-image: url('exporthere\\ineeri_icon.png');" onclick="changeBackground('exporthere/full_ineeri_isolated_text.png',4000)"></button>
-                <button id="kolleiButton" class="image-button" style="background-image: url('exporthere\\kollei_icon.png');" onclick="changeBackground('exporthere/full_kollei_isolated_text.png',1100)"></button>
+            <div id="screen">   
+                <div class="app smoothOpen" id="homeScreen">
+                    <button id="trollianButton" class="app-button" style="  background-image: url('exporthere\\phone_discord_red.png');" onclick="closeApp(),openApp('trollian')"></button>
+                </div>
+                
+
+                <div class="messageFrame smoothOpen" id="ineeriMessageFrame" style="background-image: url('exporthere/ineeri_red_bg.png');">
+                    <button class="back-button" onclick="closeMessage()"></button>
+                    <div class ="message" id="ineeriMessage" style="background-color: black;  background-image: url('exporthere/full_ineeri_isolated_text.png');"></div>
+                </div>
+
+                <div class="messageFrame smoothOpen" id="kolleiMessageFrame" style="background-color: black;  background-image: url('exporthere/kollei_red_bg.png');">
+                    <button class="back-button" onclick="closeMessage()"></button>
+                    <div class ="message" id="kolleiMessage" style="background-image: url('exporthere/full_kollei_isolated_text.png');"></div>
+                </div>
+                <div class="app smoothOpen" id="trollian" style="background-color:dimgrey;">
+                    <button class="back-button" onclick="closeApp(), openApp('homeScreen')"></button>
+                    <button id="ineeriButton" class="image-button" style="background-image: url('exporthere\\ineeri_icon.png');" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4200)"></button>
+                    <button id="kolleiButton" class="image-button" style="background-image: url('exporthere\\kollei_icon.png');" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100)"></button>
+
+                        
+
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
     <audio id="a#5" src="Harp Notes/aH5.wav" preload="auto"></audio>
     <audio id="a5" src="Harp Notes/a5.wav" preload="auto"></audio>
     <audio id="b5" src="Harp Notes/b5.wav" preload="auto"></audio>
