@@ -7,6 +7,14 @@ const ctx = canvas.getContext('2d');
 var zoom = 1;
 var width = 100;
 
+
+document.addEventListener('mousemove', function(e) {
+  const cursor = document.getElementById('customCursor');
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+
+
 function bigger() {
   zoom = zoom + 0.1;
   width = 100 / zoom;
@@ -281,7 +289,9 @@ document.addEventListener('keyup', function(event) {
 //PHONE CONTROLS
 //apps are handled with all apps technically being there at once, only expanding and unexpanding to fit the screen when opened
 const trollian=document.getElementById('trollian'); 
+const garageband=document.getElementById('garageband'); 
 const homeScreen= document.getElementById('homeScreen'); 
+const phone=document.getElementById('phone');
 openApp('homeScreen');
 
 let bgSize=800;
@@ -291,6 +301,16 @@ let initialBackgroundPositionY;//initial position of the background image
 let maxScrollY; 
 let currentMessage;
 let currentMessageFrame;
+
+function setMessageFrameBackground(frameId, imageUrl) {
+  const frame = document.getElementById(frameId);
+  if (frame) {
+      frame.style.setProperty('--frame-bg', `url(${imageUrl})`);
+  }
+}
+
+setMessageFrameBackground('ineeriMessageFrame', 'exporthere/ineeri_red_bg.png');
+setMessageFrameBackground('kolleiMessageFrame', 'exporthere/kollei_red_bg.png');
 
 
 
@@ -312,18 +332,17 @@ function openMessage(newMessage,newMessageFrame,newBgSize) {
   console.log(newBgSize);
   currentMessage.style.backgroundPositionY=0;
   console.log(currentMessage.id);
-  if (currentMessage) {
-    currentMessage.addEventListener('mousedown', handleMouseDown);
-}
-trollian.classList.remove('expanded')
+  currentMessage.addEventListener('mousedown',handleMouseDown,);
 }
 
 function closeMessage() {
   currentMessageFrame.classList.remove('expanded');
+  currentMessage.removeEventListener('mousedown',handleMouseDown);
   currentMessage=null; //sets currentMessage to correct message 
   currentMessageFrame=null;  //setscurrent MessageFrame to the new frame
   bgSize=null;
-  trollian.classList.add('expanded')
+  trollian.classList.add('expanded');
+  console.log("trollian should be back open for message");
 }
 function closeApp() {
   currentApp.classList.remove('expanded');
@@ -334,57 +353,70 @@ function closeApp() {
 
 
 
-/*
-currentMessage.addEventListener('mousedown', (e) => {
-    isDraggingMessage = true;
-    startY = e.pageY;
-    // Extract the current background position Y
-    initialBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
-    maxScrollY = bgSize*-1;
-    console.log("dragging Message");
-    console.log(bgSize);
-    if (currentMessage) {
-      currentMessage.addEventListener('mousedown', handleMouseDown);
-  }
-});
-*/
+
+
+//below three functions allow for the scrolling of trollian
+
 
 function handleMouseDown(e) {
   isDraggingMessage = true;
   startY = e.pageY;
   initialBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
   maxScrollY = bgSize * -1;
-  console.log("dragging Message");
-  console.log(bgSize);
+  console.log("mouseDownOnMessage");
+
 }
-//below three functions allow for the scrolling of trollian
+
 document.addEventListener('mousemove', (e) => {
+  //console.log("might be dragging message. Is moving");
     if (isDraggingMessage) {
+     // console.log("dragging in progress");
       requestAnimationFrame(() => {
         const deltaY = e.pageY - startY;  //deltaY is mouse movement
         // Update the background position Y
+
+        /*
         let newBackgroundPositionY = initialBackgroundPositionY + deltaY; 
-        console.log("max Scroll is " + bgSize+"new backrgound position is " + newBackgroundPositionY);
         if (newBackgroundPositionY < 0) {     //if the new background position is greater than 0, set it to 0
           newBackgroundPositionY = 0;
       } else if (newBackgroundPositionY > maxScrollY) {
           newBackgroundPositionY = maxScrollY;
       }
+          */
       currentMessage.style.backgroundPositionY = `${initialBackgroundPositionY + deltaY}px`;  
     });
     }
-    
 });
+
 
 document.addEventListener('mouseup', () => {
   if(isDraggingMessage){
+    isDraggingMessage=false;
     const currentBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
-  if (currentBackgroundPositionY > 0) {   //if the background is too far up, slingshot it back down
-    currentMessage.style.backgroundPositionY = '0px';
-} else if (currentBackgroundPositionY < maxScrollY) { //if the background is too far down, slingshot it back up
-    currentMessage.style.backgroundPositionY = `${maxScrollY}px`;
-}
-
+  if (currentBackgroundPositionY > 0) 
+    {   //if the background is too far up, slingshot it back down
+      console.log("ONSCREEN, BG TOO FAR UP, BOUNCE");
+      currentMessage.style.backgroundPositionY = '0px';
+    } 
+  else if (currentBackgroundPositionY < maxScrollY) 
+    { //if the background is too far down, slingshot it back up
+      currentMessage.style.backgroundPositionY = `${maxScrollY}px`;
+    }
   }
-  isDraggingMessage = false;
+  console.log("mouseUpMessage");
+});
+
+phone.addEventListener('mouseleave', () => {
+  console.log("CURSOR LEFT PHONE");
+  isDraggingMessage=false;
+    const currentBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
+  if (currentBackgroundPositionY > 0) 
+    {   //if the background is too far up, slingshot it back down
+      console.log("OFFSCREEN, BG TOO FAR UP, BOUNCE");
+      currentMessage.style.backgroundPositionY = '0px';
+    } 
+  else if (currentBackgroundPositionY < maxScrollY) 
+    { //if the background is too far down, slingshot it back up
+      currentMessage.style.backgroundPositionY = `${maxScrollY}px`;
+    }
 });
