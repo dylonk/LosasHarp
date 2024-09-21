@@ -1,5 +1,4 @@
 
-
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -7,12 +6,6 @@ const ctx = canvas.getContext('2d');
 var zoom = 1;
 var width = 100;
 
-
-document.addEventListener('mousemove', function(e) {
-  const cursor = document.getElementById('customCursor');
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-});
 
 
 function bigger() {
@@ -99,6 +92,9 @@ function setup() {
   strings.push(new HarpString( 360, 15, 700));
   strings.push(new HarpString( 400, 0, 800));
   strings.push(new HarpString( 450, 0, 900));
+  strings.push(new HarpString( 500, 0, 1000));
+  strings.push(new HarpString( 550, 0, 1100));
+  strings.push(new HarpString( 600, 0, 1100));
 }
 
 
@@ -227,13 +223,13 @@ document.addEventListener('keydown', function(event) {
         playSound(sound);
         break;
         case '2':
-        sound = document.getElementById('d5');
+        sound = document.getElementById('c#5');
 
         strings[1].pluck();
         playSound(sound);
         break;
         case '3':
-        sound = document.getElementById('d#5');
+        sound = document.getElementById('d5');
  
         strings[2].pluck();
         playSound(sound);
@@ -241,39 +237,56 @@ document.addEventListener('keydown', function(event) {
         case '4':
         strings[3].pluck();
 
-        sound = document.getElementById('f5');
+        sound = document.getElementById('d#5');
         playSound(sound);
         break;
         case '5':
         strings[4].pluck();
-        sound = document.getElementById('f#5');
+        sound = document.getElementById('e5');
         playSound(sound);
 
         break;
         case '6':
         strings[5].pluck();
-        sound = document.getElementById('g5');
+        sound = document.getElementById('f5');
         playSound(sound);
         break;
         case '7':
         strings[6].pluck();
-        sound = document.getElementById('a5');
+        sound = document.getElementById('f#5');
         playSound(sound);
         break;
         case '8':
         strings[7].pluck();
-        sound = document.getElementById('a#5');
+        sound = document.getElementById('g5');
         playSound(sound);
         break;
-        case '9':
+        case 'q':
         strings[8].pluck();
-        sound = document.getElementById('b5');
+        sound = document.getElementById('g#5');
         playSound(sound);
         break;
-        case '0':
+        case 'w':
         strings[9].pluck();
-        sound = document.getElementById('c6');  
+        sound = document.getElementById('a5');  
         playSound(sound);
+        break;
+        case 'e':
+        strings[10].pluck();
+        sound = document.getElementById('a#5');  
+        playSound(sound); 
+        break;
+        case 'r':
+        strings[11].pluck();
+        sound = document.getElementById('b5');  
+        playSound(sound);
+        break;
+        case 't':
+          strings[12].pluck();
+          sound = document.getElementById('c6');  
+          playSound(sound);
+          break;
+
 }
 });
 
@@ -292,7 +305,6 @@ const trollian=document.getElementById('trollian');
 const garageband=document.getElementById('garageband'); 
 const homeScreen= document.getElementById('homeScreen'); 
 const phone=document.getElementById('phone');
-openApp('homeScreen');
 
 let bgSize=800;
 let isDraggingMessage = false;
@@ -301,6 +313,15 @@ let initialBackgroundPositionY;//initial position of the background image
 let maxScrollY; 
 let currentMessage;
 let currentMessageFrame;
+
+//below function changes the background of a button to it's alt when clicked
+function changeBackground(button) {
+  // Get the value of the CSS variable --newbg
+  const newBg = getComputedStyle(button).getPropertyValue('--newbg');
+  // Set the button's background image to the new background image
+  button.style.backgroundImage = newBg;
+}
+
 
 function setMessageFrameBackground(frameId, imageUrl) {
   const frame = document.getElementById(frameId);
@@ -386,6 +407,8 @@ document.addEventListener('mousemove', (e) => {
       currentMessage.style.backgroundPositionY = `${initialBackgroundPositionY + deltaY}px`;  
     });
     }
+
+
 });
 
 

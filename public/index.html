@@ -4,19 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Loader</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body
         {
             overflow:hidden;
-            .custom-cursor {
-            cursor:url('exporthere\\shittyhand1.png'),auto;
-            user-select: none;
-        }
+           
         }
         :root 
         {
             user-select: none;
-            --transition-duration: .5s;
+            --transition-duration: .3s;
             --expanded-width: 100%;
             --expanded-height: 100%;
         }
@@ -28,14 +26,12 @@
             overflow: hidden;
         }
 
-
         .back-button {
         user-select: none;
         width: 3%;
         height: 3%;
         background-color: transparent;
         border: none;
-        cursor: pointer;
         position: absolute;
         z-index: 16;
         top: 5px; /* Adjust this value to move the button lower */
@@ -168,6 +164,8 @@
             background-image: url('exporthere\\phonehomescreen_blank.png');
             background-size: 100% 100%;
             z-index: 3;
+            width:100%;
+            height:100%;
         }
 
         .trollianButtonContainer {
@@ -178,6 +176,9 @@
         .trollianButtonContainer .image-button {
         margin-bottom: 20px; /* Add space between buttons */
         }  
+
+
+
 
         #screen {
             width: 100%;
@@ -192,14 +193,21 @@
 
             z-index: 2;
         }
+        .appContainer {
+        display: flex;
+        flex-direction: row; /* Arrange buttons from top to bottom */
+        }
+        .appContainer .app-button {
+        margin-right: 20px; /* Add space between buttons */
+        }  
         .app-button
         {
             user-select: none;
+            margin-right: 100px; /* Add space between buttons */
             width: 14%;
             height: 10%;
             background-size: cover; /* Ensure the image covers the entire button */
             border: none; /* Remove default button border */
-            cursor: pointer; /* Change cursor to pointer on hover */
             background-color: transparent;
             transition: width var(--transition-duration), height var(--transition-duration);
         }
@@ -210,7 +218,6 @@
             height: 10%;
             background-size: cover; /* Ensure the image covers the entire button */
             border: none; /* Remove default button border */
-            cursor: pointer; /* Change cursor to pointer on hover */
             background-color: transparent;
             transition: width var(--transition-duration), height var(--transition-duration);
             transform: translate(0, 0);
@@ -219,15 +226,17 @@
     
 </head>
 <body>
-    <div class="custom-cursor" id="customCursor"></div>
+    
     <div id="canvas-container">
         <canvas id="canvas" width="1700" height="800"></canvas>
         <div id="phone">
             <div id="screen">   
 
-                <div class="app smoothOpen" id="homeScreen">
+                <div class="app appContainer expanded" id="homeScreen">
                     <button id="trollianButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('trollian')"></button>
                     <button id="garagebandButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('garageband')"></button>
+                    <button id="snapchatButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('snapchat')"></button>
+
                 </div>
                 
                 <div class="messageFrame smoothOpen" id="ineeriMessageFrame" style="background-color: transparent;background-image: url('exporthere/ineeri_red_bg.png');">
@@ -240,22 +249,21 @@
                     <div class ="message" id="kolleiMessage" style="background-color: black; background-image: url('exporthere/full_kollei_isolated_text.png');"></div>
                 </div>      
 
-                <div class="app smoothOpen trollianButtonContainer" id="trollian" style="background-color:dimgrey;">
-                    <button class="back-button" onclick="closeApp(), openApp('homeScreen')"></button>
-                    <button id="ineeriButton" class="image-button" style="background-image: url('exporthere\\ineeri_icon.png');" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4200)"></button>
-                    <button id="kolleiButton" class="image-button" style="background-image: url('exporthere\\kollei_icon.png');" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100)"></button>
-                    <button id="meldilButton" class="image-button" style="background-image: url('exporthere\\meldil_icon.png');" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4200)"></button>
+                <div class="app smoothOpen trollianButtonContainer" id="trollian" style="background-color:rgb(27, 21, 21);">
+                    <button class="back-button" onclick="closeApp()"></button>
+                    <button id="ineeriButton" class="image-button" style="background-image: url('exporthere\\ineeri_icon.png');  --newbg: url('exporthere\\ineeri_icon_read.png')" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4050), changeBackground(this)"></button>
+                    <button id="kolleiButton" class="image-button" style="background-image: url('exporthere\\kollei_icon.png');  --newbg: url('exporthere\\kollei_icon_read.png')" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100), changeBackground(this)"></button>
+                    <button id="meldilButton" class="image-button" style="background-image: url('exporthere\\meldil_icon.png');" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4000)"></button>
                     <button id="natlwaButton" class="image-button" style="background-image: url('exporthere\\natlwa_icon.png');" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100)"></button>
                 </div>
                 
                 <div class="app smoothOpen" id="garageband" style="background-color:dimgrey;">
-                    <button class="back-button" onclick="closeApp(), openApp('homeScreen')"></button>
+                    <button class="back-button" onclick="closeApp()"></button>
                 </div>
-                
 
-
-
-
+                <div class="app smoothOpen" id="snapchat" style="background-color:dimgrey;">
+                    <button class="back-button" onclick="closeApp()"></button>
+                </div>
             </div>
         </div>
     </div>
