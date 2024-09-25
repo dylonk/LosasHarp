@@ -1,7 +1,7 @@
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-
+let currentMusic;
 
 var zoom = 1;
 var width = 100;
@@ -32,6 +32,52 @@ function hide(toHide) {
 
 
 //initialization of global variables
+
+
+//Meditation text functionality
+const mediationLines = [
+  "Let your subservience wash over you",
+  "Release your mind to the empress",
+  "Imagine yourself in an endless ocean of blood",
+  "Floating on your back",
+  "The Empress is here with you",
+  "Mere light years away",
+  "Her face lights up the sky",
+  "Looking down on you",
+  "With almost no disgust at all",
+  "You are worthy of pity",
+  "You are worthy of pity and hatred",
+  "To unlock more meditative messages",
+  "Enter proof of imperial army service",
+  "With name, ID number, and confirmed kill count"
+
+];
+let currentIndex = 0;
+const textDisplay = document.getElementById('textDisplay');
+//textDisplay.textContent=mediationLines[0];
+textDisplay.style.opacity = 0;
+
+
+textDisplay.addEventListener('animationiteration', () => {
+  if(textDisplay.style.animationPlayState=='running')
+  {
+    console.log("Animation iteration running");
+    textDisplay.textContent = mediationLines[currentIndex];
+    currentIndex = (currentIndex + 1) % mediationLines.length;
+  }
+})
+
+function startAnimation(anim) {
+  anim.style.animationPlayState = 'running';
+}
+
+function pauseAnimation(anim) {
+  anim.style.animationPlayState = 'paused';
+}
+
+
+
+
 stringwidth=5;
 let strings = [];
 let images = [];
@@ -179,17 +225,23 @@ class HarpString {
 
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-function playSound(soundId) {
+function playSound(soundId, shouldLoop=false) {   //function to easily play sound from ID
     audioContext.resume().then(() => {
         const audioElement = soundId;
-        if (!audioElement.source) {
+        if (!audioElement) {
             const source = audioContext.createMediaElementSource(audioElement);
             source.connect(audioContext.destination);
             audioElement.source = source; // Store the source to avoid creating it multiple times
         }
+        audioElement.loop=shouldLoop;
         audioElement.currentTime = 0; // Reset playback position
         audioElement.play();
     });
+}
+function stopSound() {
+  if (currentMusic) {
+      currentMusic.pause(); // Pause the audio element
+  }
 }
 
 
@@ -302,6 +354,7 @@ document.addEventListener('keyup', function(event) {
 //PHONE CONTROLS
 //apps are handled with all apps technically being there at once, only expanding and unexpanding to fit the screen when opened
 const trollian=document.getElementById('trollian'); 
+const meditation=document.getElementById('meditation');
 const garageband=document.getElementById('garageband'); 
 const homeScreen= document.getElementById('homeScreen'); 
 const phone=document.getElementById('phone');
@@ -313,6 +366,8 @@ let initialBackgroundPositionY;//initial position of the background image
 let maxScrollY; 
 let currentMessage;
 let currentMessageFrame;
+let currentApp=null;
+
 
 //below function changes the background of a button to it's alt when clicked
 function changeBackground(button) {
@@ -340,7 +395,37 @@ function openApp(newApp)
   currentApp=document.getElementById(newApp);
   currentApp.classList.add('expanded');
 
+
+  if (currentApp==meditation) //MEDITATION APP SETUP
+  {
+    console.log(currentApp);
+    if(!audioContext){audioContext = new AudioContext();} audioContext.resume();
+    playSound(document.getElementById('calmMusic'),true);
+    currentMusic=document.getElementById('calmMusic');
+    startAnimation(textDisplay);
+  }
+
+
 }
+
+function closeApp() {
+  if (currentApp==meditation) //MEDITATION APP SETUP
+  {
+    pauseAnimation(textDisplay);
+  }
+  currentApp.classList.remove('expanded');
+  currentApp=null; //sets currentMessage to correct message 
+  stopSound(currentMusic);
+  currentMusic=null;
+
+
+}
+
+
+
+
+
+
 
 
 //TROLLIAN CONTROLS
@@ -365,13 +450,6 @@ function closeMessage() {
   trollian.classList.add('expanded');
   console.log("trollian should be back open for message");
 }
-function closeApp() {
-  currentApp.classList.remove('expanded');
-  currentApp=null; //sets currentMessage to correct message 
-  currentMessageFrame=null;  //setscurrent MessageFrame to the new frame
-  bgSize=null;
-}
-
 
 
 
@@ -389,21 +467,10 @@ function handleMouseDown(e) {
 }
 
 document.addEventListener('mousemove', (e) => {
-  //console.log("might be dragging message. Is moving");
     if (isDraggingMessage) {
-     // console.log("dragging in progress");
       requestAnimationFrame(() => {
         const deltaY = e.pageY - startY;  //deltaY is mouse movement
-        // Update the background position Y
 
-        /*
-        let newBackgroundPositionY = initialBackgroundPositionY + deltaY; 
-        if (newBackgroundPositionY < 0) {     //if the new background position is greater than 0, set it to 0
-          newBackgroundPositionY = 0;
-      } else if (newBackgroundPositionY > maxScrollY) {
-          newBackgroundPositionY = maxScrollY;
-      }
-          */
       currentMessage.style.backgroundPositionY = `${initialBackgroundPositionY + deltaY}px`;  
     });
     }

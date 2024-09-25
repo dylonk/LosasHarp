@@ -106,6 +106,58 @@
             background-repeat:no-repeat;
             background-color: black;
         }
+        .snap
+        {
+            background-size: cover;
+            user-select: none;
+            width: 80%;
+            height:50%;
+        }
+        @keyframes fadeInOut 
+        {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        @keyframes gradient 
+        {
+            0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+        .meditation
+        {
+            display: flex;
+            position: relative  ;
+            align-items: center; /* Options: flex-start, flex-end, center, space-between, space-around, space-evenly */
+            justify-content: center;
+            background: linear-gradient(45deg, #6c81d2, #4d87b9, #8a9aec, #5b92c2);
+            background-size: 400%;
+            animation: gradient 15s ease infinite;
+
+        }
+
+        #textDisplay 
+        {
+        animation: fadeInOut 6s infinite;
+        position:absolute; 
+        width: 90%;
+        top: 25%; /* Centers vertically */
+        left: 50%; /* Centers horizontally */
+        transform: translate(-50%, -50%); /* Adjusts for the element's own dimensions */
+        font-family: 'Papyrus', sans-serif;
+        font-size: 70px;
+        font-weight: 700;
+        text-align: center;
+        }
+
         .messageFrame
         {
             width: 0%;
@@ -236,15 +288,18 @@
                     <button id="trollianButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('trollian')"></button>
                     <button id="garagebandButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('garageband')"></button>
                     <button id="snapchatButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('snapchat')"></button>
+                    <button id="meditationButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('meditation')"></button>
+
 
                 </div>
                 
-                <div class="messageFrame smoothOpen" id="ineeriMessageFrame" style="background-color: transparent;background-image: url('exporthere/ineeri_red_bg.png');">
+                    
+                <div class="messageFrame smoothOpen" id="ineeriMessageFrame" style="background-color: transparent;">
                     <button class="back-button" onclick="closeMessage()"></button>
                     <div class ="message" id="ineeriMessage" style="background-color: black;  background-image: url('exporthere/full_ineeri_isolated_text.png');"></div>
                 </div>
 
-                <div class="messageFrame smoothOpen" id="kolleiMessageFrame" style="background-color: transparent; background-image: url('exporthere/kollei_red_bg.png');">
+                <div class="messageFrame smoothOpen" id="kolleiMessageFrame" style="background-color: transparent;">
                     <button class="back-button" onclick="closeMessage()"></button>
                     <div class ="message" id="kolleiMessage" style="background-color: black; background-image: url('exporthere/full_kollei_isolated_text.png');"></div>
                 </div>      
@@ -255,6 +310,8 @@
                     <button id="kolleiButton" class="image-button" style="background-image: url('exporthere\\kollei_icon.png');  --newbg: url('exporthere\\kollei_icon_read.png')" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100), changeBackground(this)"></button>
                     <button id="meldilButton" class="image-button" style="background-image: url('exporthere\\meldil_icon.png');" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4000)"></button>
                     <button id="natlwaButton" class="image-button" style="background-image: url('exporthere\\natlwa_icon.png');" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100)"></button>
+
+
                 </div>
                 
                 <div class="app smoothOpen" id="garageband" style="background-color:dimgrey;">
@@ -264,6 +321,14 @@
                 <div class="app smoothOpen" id="snapchat" style="background-color:dimgrey;">
                     <button class="back-button" onclick="closeApp()"></button>
                 </div>
+
+                <div class="app smoothOpen meditation" id="meditation">
+                    <button class="back-button" onclick="closeApp()"></button>  
+                    <div id="textDisplay"></div>
+                    <img src="exporthere\\ineeri_icon.png" style="position:absolute; top:500px; right:290px;" height="200" width="200" > 
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -280,6 +345,7 @@
     <audio id="f5" src="Harp Notes/f5.wav" preload="auto"></audio>
     <audio id="g#5" src="Harp Notes/gH5.wav" preload="auto"></audio>
     <audio id="g5" src="Harp Notes/g5.wav" preload="auto"></audio>
+    <audio id="calmMusic" src="Other Audio/outer wilds.mp3" preload="auto"></audio>
 
     <script src="node_modules/p5/lib/p5.js"></script>
     <script src="sketch/sketch.js"></script>
