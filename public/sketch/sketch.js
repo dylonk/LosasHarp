@@ -109,8 +109,46 @@ const imagePaths = [
   "exporthere\\phonegray.png",  //images[20]
 ];
 
+const photoUrls= [
+  "exporthere/phonegray.png",
+  "exporthere/phonehomescreen_blank.png",
+  "exporthere/phone_discord_red.png",
+  "exporthere/phone_discord_red.png",
+]
 
+const photosApp = document.getElementById('photos');
+let currentPhoto;
+//generates photos
+photoUrls.forEach((imageUrl) => {
+  const photoElement = document.createElement('div');
+  photoElement.classList.add('photo');
+  photoElement.classList.add('smoothOpen');
+  photoElement.style.backgroundImage = `url(${imageUrl})`;
+  photosApp.appendChild(photoElement);
+        });
 
+//open photo when clicked
+photosApp.addEventListener("click", (event) => {
+  if(event.target.classList.contains('photo')) {
+    event.target.classList.add('expanded');
+
+        // Create the back button
+        const backButton = document.createElement('button');
+        backButton.textContent = 'Back'; // Customize the button label as needed
+        backButton.classList.add('photo-exit-button'); // Add a class for styling
+    
+        // Append the back button to the expanded photo
+        event.target.appendChild(backButton);
+    
+        // Now you can handle the back button click event
+        backButton.addEventListener('click', () => {
+          event.target.classList.remove('expanded');
+            event.target.style.zindex=17;
+
+          event.target.removeChild(backButton); // Remove the back button
+        });
+      }
+})
 
 //PRELOAD LOADS ALL IMAGES, IDS THEM ACCORDINGLY AND DRAWS THE FIRST 5.
 function preload() {
@@ -251,7 +289,7 @@ function stopSound() {
 
 
 
-
+playSound(document.getElementById('desertWind'),true);//LOOPING WIND NOISE
 const pressedKeys = new Set();
 
 

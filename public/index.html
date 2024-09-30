@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -24,6 +25,17 @@
             border: 1px solid black;
             background: transparent;
             overflow: hidden;
+        }
+        .photo-exit-button {
+        user-select: none;
+        width: 3%;
+        height: 3%;
+        background-color: red;
+        border: none;
+        position: absolute;
+        z-index: 16;
+        top: 5px; /* Adjust this value to move the button lower */
+        right: 5px; /* Adjust this value to move the button to the right */
         }
 
         .back-button {
@@ -106,13 +118,43 @@
             background-repeat:no-repeat;
             background-color: black;
         }
-        .snap
-        {
-            background-size: cover;
-            user-select: none;
-            width: 80%;
-            height:50%;
+        .lighter
+        {   
+            background-color: black;
         }
+
+        .snapchat
+        {
+            background-color: whitesmoke;
+        }
+        .photos
+        {
+            background-color: white;
+            display: flex;
+            position: relative;
+            align-items: flex-start; 
+            justify-content: center;
+            overflow:hidden;
+
+        }
+        .photo
+        {
+            width: 200px;
+            height: 200px;
+            background-color: black;
+            background-size: cover;
+            position:relative;
+            margin-right: 10px;
+            margin-bottom: 20px;
+        }
+        .photo.expanded {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin-right: 0%;
+    object-fit: cover; /* Maintain aspect ratio */
+    z-index: 1; /* Bring the expanded image to the front */
+}
         @keyframes fadeInOut 
         {
             0%, 100% { opacity: 0; }
@@ -201,7 +243,7 @@
 }
         #phone {
             width: 780px;
-            height: 1000px;
+            height: 850px;
             top: 0px;
             left:870px;
             z-index: 1;
@@ -289,6 +331,10 @@
                     <button id="garagebandButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('garageband')"></button>
                     <button id="snapchatButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('snapchat')"></button>
                     <button id="meditationButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('meditation')"></button>
+                    <button id="lighterButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('lighter')"></button>
+                    <button id="photosButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('photos')"></button>
+
+
 
 
                 </div>
@@ -318,14 +364,25 @@
                     <button class="back-button" onclick="closeApp()"></button>
                 </div>
 
-                <div class="app smoothOpen" id="snapchat" style="background-color:dimgrey;">
+                <div class="app smoothOpen snapchat" id="snapchat">
                     <button class="back-button" onclick="closeApp()"></button>
                 </div>
+
+                <div class="app smoothOpen photos" id="photos">
+                    <button class="back-button" onclick="closeApp()"></button>
+                </div>      
 
                 <div class="app smoothOpen meditation" id="meditation">
                     <button class="back-button" onclick="closeApp()"></button>  
                     <div id="textDisplay"></div>
                     <img src="exporthere\\ineeri_icon.png" style="position:absolute; top:500px; right:290px;" height="200" width="200" > 
+                </div>
+
+                <div class="app smoothOpen lighter" id="lighter">
+                    <button class="back-button" onclick="closeApp()"></button>  
+                    <img src="exporthere\\lighter_gif.gif" style="position:absolute; top:400px; right:200px;" height="400" width="400" > 
+
+
                 </div>
 
 
@@ -346,6 +403,8 @@
     <audio id="g#5" src="Harp Notes/gH5.wav" preload="auto"></audio>
     <audio id="g5" src="Harp Notes/g5.wav" preload="auto"></audio>
     <audio id="calmMusic" src="Other Audio/outer wilds.mp3" preload="auto"></audio>
+    <audio id="desertWind" src="Other Audio/desert wind.mp3" preload="auto"></audio>
+
 
     <script src="node_modules/p5/lib/p5.js"></script>
     <script src="sketch/sketch.js"></script>
