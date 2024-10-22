@@ -15,7 +15,7 @@
         :root 
         {
             user-select: none;
-            --transition-duration: .3s;
+            --transition-duration: .5s;
             --expanded-width: 100%;
             --expanded-height: 100%;
         }
@@ -71,38 +71,50 @@
         transform: translateY(-50%) rotate(-45deg);
     }
 
+    #curvedarrow {
+      position: relative;
+      width: 0;
+      height: 0;
+      border-top: 9px solid transparent;
+      border-right: 9px solid red;
+      transform: rotate(10deg);
+    }
+    #curvedarrow:after {
+      content: "";
+      position: absolute;
+      border: 0 solid transparent;
+      border-top: 3px solid red;
+      border-radius: 20px 0 0 0;
+      top: -12px;
+      left: -9px;
+      width: 12px;
+      height: 12px;
+      transform: rotate(45deg);
+    }
+
+
+
         .smoothOpen
         {
-            transition: width var(--transition-duration), height var(--transition-duration);
+            transition: transform var(--transition-duration);
             transform-origin: top left; /* Ensure scaling happens from the top-left corner */
 
         }
-        .smoothOpen.expanded {
-    width: var(--expanded-width);
-    height: var(--expanded-height);
-    transform: scale(1); /* Ensure the element is at its full size */
+
+.smoothOpen:not(.expanded):not(.photo) {
+    transform: scale(0); /* photos work differently than other smoothopen objects, as they do not start at scale 0. */
 }
 
-.smoothOpen:not(.expanded) {
-    transform: scale(1); /* Adjust the scale as needed for the closed state */
-}
-
-.smoothOpen.expanded .image-button {
-    transform: scale(1); /* Ensure buttons are at their full size */
-}
-
-.smoothOpen:not(.expanded) .image-button {
-    transform: scale(1); /* Ensure buttons scale with the container */
-}
         
         .app
         {
             position:absolute;
+            top: 0%;
+            left: 0%;
             overflow: hidden;
-            width:0%;
-            height:0%;
-            transform: translate(-90%, -90%);
             z-index: 4;
+            height: 100%;
+            width: 100%;
         }
         .message
         {
@@ -125,35 +137,169 @@
 
         .snapchat
         {
+            overflow: scroll;
+            align-items: center;
             background-color: whitesmoke;
         }
-        .photos
+
+        .snap
         {
-            background-color: white;
-            display: flex;
+            margin-top: 2%;
+            user-select: none;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .snapchat::-webkit-scrollbar {
+             display: none;
+        }
+
+        .snap img
+        {
             position: relative;
-            align-items: flex-start; 
-            justify-content: center;
-            overflow:hidden;
+            width: 100%;
+            height: 90%;
+            user-select: none;
+            -webkit-user-drag: none;
+            display: block;
+        }
+
+        .like-button {
+            border: none;
 
         }
+        .heart-icon
+        {
+            fill: none;
+            stroke: black;
+            stroke-width: 1;
+            transition: fill .3s ease   , transform 0.3s;
+        }
+        .like-button:hover .heart-icon {
+            transform: scale(1.25);
+            
+            cursor: pointer;
+        }
+        .like-button.liked .heart-icon {
+            fill: red;     
+            stroke-dashoffset: 0;   
+        }
+
+    .snapHeader  {
+        display: block;
+        padding-bottom: 20px;
+        background-color: rgb(245, 234, 227);
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px ;
+        border-width: 2px;
+    }
+    .snapHeader .username {
+    font-weight: bold;
+    font-size: 30px;
+    margin-left: 9px;
+    margin-right: 50px;
+    }
+    .snapHeader .like-button {
+    float: right;
+    width: 50px;
+    height: 50px;
+    }
+
+    .snapHeader .timestamp
+    {
+        font-size: 30px;
+        color: gray;
+        opacity: 0.5;
+
+
+    }
+    .comment {
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 150%;
+    display: block;
+    position: relative;
+    }
+    .statusUpdate
+    {
+    border-radius: 30px;
+    width: 100%;
+    height: 25%;
+    background:linear-gradient(silver,gray);
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 150%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+    }
+    .statusUpdate img
+    {
+        width: 30%;
+        height: 100%;
+        margin-left: 35%;
+    }
+    .statusUpdate p
+    {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-size: 50px;
+    }
+
+    .comment .username {
+    font-weight: bold;
+    }
+
+    .comment .timestamp {
+    color: gray;
+    opacity: 0.5;
+    margin-left: 10px;
+    }
+
+    .comment .like-button {
+    float: right;
+    width: 30px;
+    height: 30px;
+    }
+
+
+    .comment-body p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    }
+
+    .comment-footer {
+    margin-top: 0px;
+    }
+
+    .comment .reply-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    }
+
+
+    .photos {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    position: relative;
+    background-color: white;
+    overflow: hidden;
+}
         .photo
         {
-            width: 200px;
-            height: 200px;
             background-color: black;
+            z-index: 2;
+            width: 30%;
+            height: 30%;
+            margin: 2%;
             background-size: cover;
             position:relative;
-            margin-right: 10px;
-            margin-bottom: 20px;
+            transition: transform var(--transition-duration), z-index var(--transition-duration);
         }
-        .photo.expanded {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    margin-right: 0%;
-    object-fit: cover; /* Maintain aspect ratio */
-    z-index: 1; /* Bring the expanded image to the front */
+        .photoExpanded {
+            transform-origin: center;
+            z-index: 20;
 }
         @keyframes fadeInOut 
         {
@@ -177,13 +323,11 @@
         .meditation
         {
             display: flex;
-            position: relative  ;
-            align-items: center; /* Options: flex-start, flex-end, center, space-between, space-around, space-evenly */
+            align-items: center; 
             justify-content: center;
-            background: linear-gradient(45deg, #6c81d2, #4d87b9, #8a9aec, #5b92c2);
+            background: linear-gradient(45deg, #6c81d2, #4d87b9, #8a9aec, #5b92c2);/*these threelines create animated background*/
             background-size: 400%;
             animation: gradient 15s ease infinite;
-
         }
 
         #textDisplay 
@@ -202,8 +346,8 @@
 
         .messageFrame
         {
-            width: 0%;
-            height: 0%;
+            width: 100%;
+            height: 100%;
             position:absolute;
             z-index: 10;
             transform: translate(-80%, -80%);
@@ -227,9 +371,7 @@
 }
         .expanded 
         {
-            width: var(--expanded-width);
-            height: var(--expanded-height);
-            transform: translate(0, 0);
+            transform: scale(1);
         }
 
         #canvas-container {
@@ -262,14 +404,57 @@
             height:100%;
         }
 
-        .trollianButtonContainer {
+        .discorpse {
         display: flex;
         flex-direction: column; /* Arrange buttons from top to bottom */
         align-items: flex-start; /* Align buttons to the left */
         }
-        .trollianButtonContainer .image-button {
-        margin-bottom: 20px; /* Add space between buttons */
-        }  
+        
+        .discorpseUser
+        {
+            display: block;
+            height: 15%;
+            width: 100%;
+            margin-bottom: 3%;
+            position: relative;
+        }
+        .discorpseUser .image-button {
+        display: inline-block;
+        height: 90%;
+        width: 16%;
+        } 
+        .discorpseUser p
+        {
+            display: inline-block;
+            font-size: 50px;    
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            height: 100%;
+            top: -30%;
+            position: absolute;
+        }
+
+
+        .logo {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 15%;
+        }
+
+        .logo img {
+        height: 70%;
+        display: block;
+        width: 40%;
+        left: 58%;
+        position: relative;
+        }
+        .discorpseLine {      /*horizontal line */
+        display: block;
+        position: relative;
+        height: 1%;
+        border: 0;
+        border-top: 8px solid #b10000;
+        }
 
 
 
@@ -299,22 +484,16 @@
             user-select: none;
             margin-right: 100px; /* Add space between buttons */
             width: 14%;
-            height: 10%;
+            height: 12%;
             background-size: cover; /* Ensure the image covers the entire button */
             border: none; /* Remove default button border */
             background-color: transparent;
-            transition: width var(--transition-duration), height var(--transition-duration);
         }
         .image-button {
-            
             user-select: none;
-            width: 14%;
-            height: 10%;
             background-size: cover; /* Ensure the image covers the entire button */
             border: none; /* Remove default button border */
             background-color: transparent;
-            transition: width var(--transition-duration), height var(--transition-duration);
-            transform: translate(0, 0);
         }
     </style>
     
@@ -327,9 +506,9 @@
             <div id="screen">   
 
                 <div class="app appContainer expanded" id="homeScreen">
-                    <button id="trollianButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('trollian')"></button>
+                    <button id="discorpseButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('discorpse')"></button>
                     <button id="garagebandButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('garageband')"></button>
-                    <button id="snapchatButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('snapchat')"></button>
+                    <button id="snapchatButton" class="app-button" style="background-image: url('exporthere\\snapchat_iso.png');" onclick="openApp('snapchat')"></button>
                     <button id="meditationButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('meditation')"></button>
                     <button id="lighterButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('lighter')"></button>
                     <button id="photosButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('photos')"></button>
@@ -350,24 +529,223 @@
                     <div class ="message" id="kolleiMessage" style="background-color: black; background-image: url('exporthere/full_kollei_isolated_text.png');"></div>
                 </div>      
 
-                <div class="app smoothOpen trollianButtonContainer" id="trollian" style="background-color:rgb(27, 21, 21);">
+                <div class="app smoothOpen discorpse" id="discorpse" style="background-color:rgb(27, 21, 21);">
                     <button class="back-button" onclick="closeApp()"></button>
-                    <button id="ineeriButton" class="image-button" style="background-image: url('exporthere\\ineeri_icon.png');  --newbg: url('exporthere\\ineeri_icon_read.png')" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4050), changeBackground(this)"></button>
-                    <button id="kolleiButton" class="image-button" style="background-image: url('exporthere\\kollei_icon.png');  --newbg: url('exporthere\\kollei_icon_read.png')" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100), changeBackground(this)"></button>
-                    <button id="meldilButton" class="image-button" style="background-image: url('exporthere\\meldil_icon.png');" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4000)"></button>
-                    <button id="natlwaButton" class="image-button" style="background-image: url('exporthere\\natlwa_icon.png');" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100)"></button>
+                    <div class="logo">
+                        <img src="exporthere\\discorpse.png " >
+                        <hr class="discorpseLine"> 
+                    </div>
 
+                    <div class = "discorpseUser">   
+                        <button id="ineeriButton" class="image-button" style="background-image: url('exporthere\\ineeri_icon.png');  --newbg: url('exporthere\\ineeri_icon_read.png')" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4050), changeBackground(this)"></button>
+                        <p style="color:purple;"> MagnificentlyMercurial  </p>
+                    </div>
 
+                    <div class = "discorpseUser">   
+                        <button id="kolleiButton" class="image-button" style="background-image: url('exporthere\\kollei_icon.png');  --newbg: url('exporthere\\kollei_icon_read.png')" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100), changeBackground(this)"></button>
+                        <p style="color:purple;"> BriskRanger  </p>
+
+                    </div>
+
+                    <div class = "discorpseUser">   
+                        <button id="meldilButton" class="image-button" style="background-image: url('exporthere\\meldil_icon.png');" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4000)"></button>
+                        <p style="color:rgb(37, 126, 199);"> PoseidonsPlayboy  </p>
+
+                    </div>
+
+                    <div class = "discorpseUser">   
+                        <button id="natlwaButton" class="image-button" style="background-image: url('exporthere\\natlwa_icon.png');" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100)"></button>
+                        <p style="color:purple;"> BlankScanner  </p>
+
+                    </div>
                 </div>
                 
                 <div class="app smoothOpen" id="garageband" style="background-color:dimgrey;">
                     <button class="back-button" onclick="closeApp()"></button>
                 </div>
 
-                <div class="app smoothOpen snapchat" id="snapchat">
-                    <button class="back-button" onclick="closeApp()"></button>
-                </div>
+                <div class="app scrollable smoothOpen snapchat" id="snapchat">
+                    <button class="back-button" onclick="closeApp()" style="position: fixed;"></button>
+                    <div class="snap">
+                        <img src="exporthere\\snap_fixed_1.png">
+                        <div class="snapHeader" > 
+                            <span class="username" style="color:#A10000;">nofreeWrenches</span>
+                            <span class="timestamp">74h</span>
+                            <div class="like-button"></div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #6a006a;">wxxxetinthe%ocean</span>
+                            <span class="timestamp">74h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>get seadweller NOOk 2DAY. www.onlyfins.com/wetintheocean</p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #A10000">noFreeWrenches</span>
+                            <span class="timestamp">74h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>the link is broken</p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #A10000">noFreeWrenches</span>
+                            <span class="timestamp">74h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>I c@n't click it</p>  
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="snap" >
+                        <img src="exporthere\\snap_fixed_2.png">
+                        <div class="snapHeader" > 
+                            <span class="username" style="color: teal;">allv1b3sKelc11</span>
+                            <span class="timestamp">74h</span>
+                            <span class="like-button"></span>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #2b0057;">EmpressofBlockB</span>
+                            <span class="timestamp">74h</span>
+                            <span class="like-button"></span>
+                            <div class="comment-body">
+                                <p>u look great in this pic</p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #416600;">BriaanfromTrollFamilyGuy</span>
+                            <span class="timestamp">74h</span>
+                            <span class="like-button"></span>
+                            <div class="comment-body">
+                                <p>wym she looks great her face isn't even in it</p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #2b0057;">EmpressofBlockB</span>
+                            <span class="timestamp">74h</span>
+                            <span class="like-button"></span>
+                            <div class="comment-body">
+                                <p>brad lay the fuck off people can look great from the back</p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #416600;">BriaanfromTrollFamilyGuy</span>
+                            <span class="timestamp">74h</span>
+                            <span class="like-button"></span>
+                            <div class="comment-body">
+                                <p>ok sry</p>  
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="snap">
+                        <img src="exporthere\\snap_fixed_3.png">
+                        <div class="snapHeader" > 
+                            <span class="username" style="color: #ddcf12;">SlimyMemes</span>
+                            <span class="timestamp">73h</span>
+                            <div class="like-button"></div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #000056;">HeyItsValinx</span>
+                            <span class="timestamp">73h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>I hate goldbloods get off you|` phone and start looting dumbass</p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #ddcf12;">SlimyMemesk</span>
+                            <span class="timestamp">73h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>My lusus won't let me :h. Is it cool out there?</p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #000056;">HeyItsValinx</span>
+                            <span class="timestamp">73h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>I caved in like 4 b|`onzebloods heads for a tv I'm neve|` even going to use hell yeah it's cool</p>  
+                            </div>
+                        </div>
+
+                        <div class="snap">
+                            <img src="exporthere\\snap_fixed_4.png">
+                            <div class="snapHeader" > 
+                                <span class="username" style="color: #000056;">HeyItsValinx</span>
+                                <span class="timestamp">73h</span>
+                                <div class="like-button"></div>
+                            </div>
+                            <div class = 'comment'>
+                                <span class="username" style="color: #ddcf12;">SlimyMemes</span>
+                                <span class="timestamp">73h</span>
+                                <div class="like-button"></div>
+                                <div class="comment-body">
+                                    <p>Why are you making fun of me for posting memes when you're doing the exact same thing?</p>  
+                                </div>
+                            </div>
+                            <div class = 'comment'>
+                                <span class="username" style="color: #000056;">HeyItsValinx</span>
+                                <span class="timestamp">73h</span>
+                                <div class="like-button"></div>
+                                <div class="comment-body">
+                                    <p>Mikiol I'm not gonna lie I am lite|`ally on my way to you|` hive to kill you and take you|` stuff. I'm giving you five minutes notice because I'm a good f|`iend</p>  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="statusUpdate">
+                            <p><span style="color: #ddcf12;">SlimyMemes</span> set Trollian status to FRIGHTENED</p>
+                            <img src="https://media1.tenor.com/m/0TVQxFiz9uoAAAAC/emoji-worried.gif">
+                        </div>
+                    </div>
+                    <div class="snap">
+                        <img src="exporthere\\snap_fixed_5.png">
+                        <div class="snapHeader" > 
+                            <span class="username" style="color: teal;">RelanaDances</span>
+                            <span class="timestamp">74h</span>
+                            <div class="like-button"></div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #2b0057;">EmpressofBlockB</span>
+                            <span class="timestamp">74h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>aw girl :&#40; Idk if you're feeling up to it but me and Valinx are gonna go kill Mikiol at his hive if u wanna join </p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: teal;">RelanaDances</span>
+                            <span class="timestamp">74h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>omg yes :D</p>  
+                            </div>
+                        </div>
+                        <div class="statusUpdate">
+                            <p><span style="color: teal;">RelanaDances</span> set Trollian status to AGGRESSIVE</p>
+                            <img src="https://media.tenor.com/wNVH9FUwNUkAAAAM/emoji-mad.gif">
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #2b0057;">EmpressofBlockB</span>
+                            <span class="timestamp">74h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>thattagirl lmao </p>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="snap">
+                        <img src="exporthere\\snap_fixed_6.png">
+                        <div class="snapHeader" > 
+                            <span class="username" style="color: #ddcf12;">Relana</span>
+                            <span class="timestamp">74h</span>
+                            <div class="like-button"></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="app smoothOpen photos" id="photos">
                     <button class="back-button" onclick="closeApp()"></button>
                 </div>      
@@ -375,7 +753,7 @@
                 <div class="app smoothOpen meditation" id="meditation">
                     <button class="back-button" onclick="closeApp()"></button>  
                     <div id="textDisplay"></div>
-                    <img src="exporthere\\ineeri_icon.png" style="position:absolute; top:500px; right:290px;" height="200" width="200" > 
+                    <img class="smoothOpen" src="exporthere\\ineeri_icon.png" style="top:500px; right:290px;" height="30%" width="30%" > 
                 </div>
 
                 <div class="app smoothOpen lighter" id="lighter">

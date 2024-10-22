@@ -107,30 +107,67 @@ const imagePaths = [
   "exporthere\\phone_icons_text_combo.png",
   "exporthere\\phone_icons_text_isolated.png",
   "exporthere\\phonegray.png",  //images[20]
+  "exporthere\\discorpse.png", 
+  "exporthere\\snapchat_iso.png", 
+  "exporthere\\snap_fixed_1.png",
+  "exporthere\\snap_fixed_2.png",
+  "exporthere\\snap_fixed_3.png",
+  "exporthere\\snap_fixed_4.png",
+  "exporthere\\snap_fixed_5.png",
+  "exporthere\\snap_fixed_6.png",
+  "exporthere\\snap_bevel_1.png",
+  "exporthere\\ppic_1.png",
+  "exporthere\\ppic_2.png",
+  "exporthere\\ppic_3.png",
+  "exporthere\\ppic_4.png",
+  "exporthere\\ppic_5.png",
+  "exporthere\\ppic_6.png",
+
 ];
 
 const photoUrls= [
-  "exporthere/phonegray.png",
-  "exporthere/phonehomescreen_blank.png",
-  "exporthere/phone_discord_red.png",
-  "exporthere/phone_discord_red.png",
+  "exporthere/ppic_1.png",
+  "exporthere/ppic_2.png",
+  "exporthere/ppic_3.png",
+  "exporthere/ppic_4.png",
+  "exporthere/ppic_5.png",
+  "exporthere/ppic_6.png",
 ]
 
 const photosApp = document.getElementById('photos');
+const expandedPhotoContainer = document.getElementById('expanded-photo-container');//need seperate containers for thumbnail and expanded
+const photoContainer = document.getElementById('photo-container');
 let currentPhoto;
-//generates photos
+
+//generates photo thumbnails and adds to photo container
 photoUrls.forEach((imageUrl) => {
   const photoElement = document.createElement('div');
   photoElement.classList.add('photo');
-  photoElement.classList.add('smoothOpen');
   photoElement.style.backgroundImage = `url(${imageUrl})`;
   photosApp.appendChild(photoElement);
         });
 
-//open photo when clicked
+//open photo from thumbnail when clicked
 photosApp.addEventListener("click", (event) => {
   if(event.target.classList.contains('photo')) {
-    event.target.classList.add('expanded');
+    currentPhoto=event.target;//currentphoto is being used
+    currentPhoto.classList.add('photoExpanded');
+    const rect = currentPhoto.getBoundingClientRect();
+    const photosApp = document.querySelector('.photos');
+    const containerRect = photosApp.getBoundingClientRect();
+
+    console.log("container rect width="+ containerRect.width);
+    console.log("rect width="+rect.width);
+    console.log("rect left="+ rect.left);
+    console.log("rect top="+rect.top);
+    const scaleX = containerRect.width / rect.width;
+    const scaleY = (containerRect.height / rect.height);
+    const scale = Math.min(scaleX, scaleY); // Maintain aspect ratio
+    //the photo needs to move right by
+    const translateX = ((containerRect.left + containerRect.width / 2) - (rect.left + rect.width / 2))*1.25;
+    const translateY = ((containerRect.top + containerRect.height / 2) - (rect.top + rect.height / 2))*1.2;
+
+    currentPhoto.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
 
         // Create the back button
         const backButton = document.createElement('button');
@@ -138,14 +175,14 @@ photosApp.addEventListener("click", (event) => {
         backButton.classList.add('photo-exit-button'); // Add a class for styling
     
         // Append the back button to the expanded photo
-        event.target.appendChild(backButton);
+        currentPhoto.appendChild(backButton);
     
         // Now you can handle the back button click event
         backButton.addEventListener('click', () => {
-          event.target.classList.remove('expanded');
-            event.target.style.zindex=17;
-
-          event.target.removeChild(backButton); // Remove the back button
+          currentPhoto.classList.remove('photoExpanded');
+          currentPhoto.style.transform='';
+          currentPhoto.removeChild(backButton); // Remove the back button
+          currentPhoto=null;
         });
       }
 })
@@ -396,15 +433,36 @@ const meditation=document.getElementById('meditation');
 const garageband=document.getElementById('garageband'); 
 const homeScreen= document.getElementById('homeScreen'); 
 const phone=document.getElementById('phone');
+const snapchat=document.getElementById('snapchat');
 
 let bgSize=800;
-let isDraggingMessage = false;
+let isDragging = false; //whether an app/message is being dragged or not
 let startY;// initial mouse position
 let initialBackgroundPositionY;//initial position of the background image
-let maxScrollY; 
+let maxScrollY; //used for message background image max.
 let currentMessage;
 let currentMessageFrame;
 let currentApp=null;
+let scrollTop;
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  console.log ("running liebutton");
+  var svgIcon = `
+  <svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+  </svg>
+`;
+  var likeButtons = document.querySelectorAll('.like-button');
+  likeButtons.forEach(function(button) {
+    button.innerHTML = svgIcon;
+    console.log("FOUND A LIKE BUTTONG");
+    button.addEventListener('click', function() { // like button functionality
+      this.classList.toggle("liked");
+      console.log("should have liked image");
+    });
+  });
+});
 
 
 //below function changes the background of a button to it's alt when clicked
@@ -428,12 +486,15 @@ setMessageFrameBackground('kolleiMessageFrame', 'exporthere/kollei_red_bg.png');
 
 
 
+
 function openApp(newApp)
 {
   currentApp=document.getElementById(newApp);
   currentApp.classList.add('expanded');
-
-
+  if(currentApp.classList.contains("scrollable"))
+  {
+    currentApp.addEventListener('mousedown',handleMouseDown,);//inits scrolling of scrollable app
+  }
   if (currentApp==meditation) //MEDITATION APP SETUP
   {
     console.log(currentApp);
@@ -451,8 +512,12 @@ function closeApp() {
   {
     pauseAnimation(textDisplay);
   }
+  if(currentApp.classList.contains("scrollable"))
+  {
+    currentApp.removeEventListener('mousedown',handleMouseDown,);
+  }
   currentApp.classList.remove('expanded');
-  currentApp=null; //sets currentMessage to correct message 
+  currentApp=null; 
   stopSound(currentMusic);
   currentMusic=null;
 
@@ -482,8 +547,8 @@ function openMessage(newMessage,newMessageFrame,newBgSize) {
 function closeMessage() {
   currentMessageFrame.classList.remove('expanded');
   currentMessage.removeEventListener('mousedown',handleMouseDown);
-  currentMessage=null; //sets currentMessage to correct message 
-  currentMessageFrame=null;  //setscurrent MessageFrame to the new frame
+  currentMessage=null; 
+  currentMessageFrame=null;  
   bgSize=null;
   trollian.classList.add('expanded');
   console.log("trollian should be back open for message");
@@ -492,59 +557,92 @@ function closeMessage() {
 
 
 
-//below three functions allow for the scrolling of trollian
+//below three functions allow for the scrolling of ALL APPS. NOT JUST TROLLIAN MESSAGES.
 
 
 function handleMouseDown(e) {
-  isDraggingMessage = true;
-  startY = e.pageY;
-  initialBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
-  maxScrollY = bgSize * -1;
-  console.log("mouseDownOnMessage");
-
+  isDragging = true;  //sets is dragging to true
+  if(currentMessage)//this is the scroll behavior for a message
+  {
+    startY = e.pageY;
+    initialBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
+    maxScrollY = bgSize * -1;
+    console.log("mouseDownOnMessage");
+  }
+  else  //this is the scroll behavior for an app
+  {
+    currentApp.classList.add('active');
+    startY = e.pageY;
+    scrollTop = currentApp.scrollTop;
+    console.log("mouseDownOnApp");
+  }
 }
 
+
 document.addEventListener('mousemove', (e) => {
-    if (isDraggingMessage) {
+    if (isDragging) {
       requestAnimationFrame(() => {
         const deltaY = e.pageY - startY;  //deltaY is mouse movement
-
-      currentMessage.style.backgroundPositionY = `${initialBackgroundPositionY + deltaY}px`;  
+        if(currentMessage)
+        {
+          currentMessage.style.backgroundPositionY = `${initialBackgroundPositionY + deltaY}px`;  //drags current message
+        }
+        else//behavior for scrolling app
+        {
+          const y = e.pageY - currentApp.offsetTop;
+          const walk = (y - startY) * 2; // Scroll-fast
+          currentApp.scrollTop = scrollTop - walk;
+          console.log("scrolling app");
+        }
+      
     });
     }
-
-
 });
 
 
 document.addEventListener('mouseup', () => {
-  if(isDraggingMessage){
-    isDraggingMessage=false;
-    const currentBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
-  if (currentBackgroundPositionY > 0) 
-    {   //if the background is too far up, slingshot it back down
-      console.log("ONSCREEN, BG TOO FAR UP, BOUNCE");
-      currentMessage.style.backgroundPositionY = '0px';
-    } 
-  else if (currentBackgroundPositionY < maxScrollY) 
-    { //if the background is too far down, slingshot it back up
-      currentMessage.style.backgroundPositionY = `${maxScrollY}px`;
+  if(isDragging){
+    isDragging=false;
+
+    if(currentMessage)
+    {
+      const currentBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
+      if (currentBackgroundPositionY > 0) 
+        {   //if the background is too far up, slingshot it back down
+          console.log("ONSCREEN, BG TOO FAR UP, BOUNCE");
+          currentMessage.style.backgroundPositionY = '0px';
+        } 
+      else if (currentBackgroundPositionY < maxScrollY) 
+        { //if the background is too far down, slingshot it back up
+          currentMessage.style.backgroundPositionY = `${maxScrollY}px`;
+        }
+      }
+      console.log("mouseUpMessage");
     }
-  }
-  console.log("mouseUpMessage");
+
+    else
+    {
+
+    }
 });
 
-phone.addEventListener('mouseleave', () => {
+phone.addEventListener('mouseleave', () => {  
   console.log("CURSOR LEFT PHONE");
-  isDraggingMessage=false;
+  isDragging=false;
+  if(currentMessage)
+  {
     const currentBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
-  if (currentBackgroundPositionY > 0) 
+    if (currentBackgroundPositionY > 0) 
     {   //if the background is too far up, slingshot it back down
       console.log("OFFSCREEN, BG TOO FAR UP, BOUNCE");
       currentMessage.style.backgroundPositionY = '0px';
     } 
-  else if (currentBackgroundPositionY < maxScrollY) 
+    else if (currentBackgroundPositionY < maxScrollY) 
     { //if the background is too far down, slingshot it back up
       currentMessage.style.backgroundPositionY = `${maxScrollY}px`;
     }
+  }
+
 });
+
+
