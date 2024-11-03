@@ -44,7 +44,7 @@
         height: 3%;
         background-color: transparent;
         border: none;
-        position: absolute;
+        position: fixed;
         z-index: 16;
         top: 5px; /* Adjust this value to move the button lower */
         left: 5px; /* Adjust this value to move the button to the right */
@@ -185,11 +185,12 @@
 
     .snapHeader  {
         display: block;
-        padding-bottom: 20px;
+        padding-bottom: 2px;
         background-color: rgb(245, 234, 227);
         border-bottom-left-radius: 25px;
         border-bottom-right-radius: 25px ;
         border-width: 2px;
+        height: 50px;
     }
     .snapHeader .username {
     font-weight: bold;
@@ -208,8 +209,14 @@
         font-size: 30px;
         color: gray;
         opacity: 0.5;
-
-
+    }
+    .snapHeader .likeCount
+    {
+        float: right;
+        margin-right: 1%;
+        font-size: 40px;
+        color: rgb(0, 0, 0);
+        opacity: 0.8;
     }
     .comment {
     padding: 10px;
@@ -290,8 +297,8 @@
         {
             background-color: black;
             z-index: 2;
-            width: 30%;
-            height: 30%;
+            width: 32%;
+            height: 32%;
             margin: 2%;
             background-size: cover;
             position:relative;
@@ -385,7 +392,7 @@
 }
         #phone {
             width: 780px;
-            height: 850px;
+            height: 800px;
             top: 0px;
             left:870px;
             z-index: 1;
@@ -402,6 +409,10 @@
             z-index: 3;
             width:100%;
             height:100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start; /* Ensures all items align at the start of the row */
+
         }
 
         .discorpse {
@@ -421,7 +432,7 @@
         .discorpseUser .image-button {
         display: inline-block;
         height: 90%;
-        width: 16%;
+        width: 14%;
         } 
         .discorpseUser p
         {
@@ -472,22 +483,37 @@
 
             z-index: 2;
         }
-        .appContainer {
-        display: flex;
-        flex-direction: row; /* Arrange buttons from top to bottom */
+
+        .app-wrapper
+        {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 25% ;/* Adjust if necessary */
+            width: 15%;
+            user-select: none;
+            margin-top: 3%;
+            margin-left: 3%;
+            margin-right: 3%;
+            flex-basis: 18%;  /* Adjust this to your needs */
+            flex-grow: 0;
+            flex-shrink: 0
         }
-        .appContainer .app-button {
-        margin-right: 20px; /* Add space between buttons */
-        }  
+
+        .app-wrapper p
+        {
+            font-family:Arial, Helvetica, sans-serif;
+            color: whitesmoke;
+            font-size: 20px;
+        }
         .app-button
         {
-            user-select: none;
-            margin-right: 100px; /* Add space between buttons */
-            width: 14%;
-            height: 12%;
+            height: 100%; /* Set a fixed height */
+            width: 100%; /* Set a fixed width */
             background-size: cover; /* Ensure the image covers the entire button */
-            border: none; /* Remove default button border */
             background-color: transparent;
+            border: none; /* Remove default button border */
         }
         .image-button {
             user-select: none;
@@ -505,17 +531,31 @@
         <div id="phone">
             <div id="screen">   
 
-                <div class="app appContainer expanded" id="homeScreen">
-                    <button id="discorpseButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('discorpse')"></button>
-                    <button id="garagebandButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('garageband')"></button>
-                    <button id="snapchatButton" class="app-button" style="background-image: url('exporthere\\snapchat_iso.png');" onclick="openApp('snapchat')"></button>
-                    <button id="meditationButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('meditation')"></button>
-                    <button id="lighterButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('lighter')"></button>
-                    <button id="photosButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('photos')"></button>
-
-
-
-
+                <div class="app expanded" id="homeScreen">
+                    <div class="app-wrapper">
+                        <button id="discorpseButton" class="app-button" style="background-image: url('exporthere\\phone_discord_red.png');" onclick="openApp('discorpse')"></button>
+                        <p>Discorpse</p>
+                    </div>
+                    <div class="app-wrapper">
+                        <button id="garagebandButton" class="app-button" style="background-image: url('exporthere\\garage_iso.png');" onclick="openApp('garageband')"></button>
+                        <p>Garageband</p>
+                    </div>
+                    <div class="app-wrapper">
+                        <button id="snapchatButton" class="app-button" style="background-image: url('exporthere\\snapchat_iso.png');" onclick="openApp('snapchat')"></button>
+                        <p>Snapchat</p>
+                    </div>
+                    <div class="app-wrapper">
+                        <button id="meditationButton" class="app-button" style="background-image: url('exporthere\\meditate_iso.png');" onclick="openApp('meditation')"></button>
+                        <p>Meditation</p>
+                    </div>
+                    <div class="app-wrapper">
+                        <button id="lighterButton" class="app-button" style="background-image: url('exporthere\\lighter_iso.png');" onclick="openApp('lighter')"></button>
+                        <p>Lighter</p>
+                    </div>
+                    <div class="app-wrapper">
+                        <button id="photosButton" class="app-button" style="background-image: url('exporthere\\photos_iso.png');" onclick="openApp('photos')"></button>
+                        <p>Photos</p>
+                    </div>
                 </div>
                 
                     
@@ -537,24 +577,24 @@
                     </div>
 
                     <div class = "discorpseUser">   
-                        <button id="ineeriButton" class="image-button" style="background-image: url('exporthere\\ineeri_icon.png');  --newbg: url('exporthere\\ineeri_icon_read.png')" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4050), changeBackground(this)"></button>
+                        <button id="ineeriButton" class="image-button" style="background-image: url('exporthere\\ineeri_icon_iso.png');  --newbg: url('exporthere\\ineeri_icon_gray.png')" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4050), changeBackground(this)"></button>
                         <p style="color:purple;"> MagnificentlyMercurial  </p>
                     </div>
 
                     <div class = "discorpseUser">   
-                        <button id="kolleiButton" class="image-button" style="background-image: url('exporthere\\kollei_icon.png');  --newbg: url('exporthere\\kollei_icon_read.png')" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100), changeBackground(this)"></button>
+                        <button id="kolleiButton" class="image-button" style="background-image: url('exporthere\\kollei_icon_iso.png');  --newbg: url('exporthere\\kollei_icon_gray.png')" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100), changeBackground(this)"></button>
                         <p style="color:purple;"> BriskRanger  </p>
 
                     </div>
 
                     <div class = "discorpseUser">   
-                        <button id="meldilButton" class="image-button" style="background-image: url('exporthere\\meldil_icon.png');" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4000)"></button>
+                        <button id="meldilButton" class="image-button" style="background-image: url('exporthere\\meldil_icon_gray.png');" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4000)"></button>
                         <p style="color:rgb(37, 126, 199);"> PoseidonsPlayboy  </p>
 
                     </div>
 
                     <div class = "discorpseUser">   
-                        <button id="natlwaButton" class="image-button" style="background-image: url('exporthere\\natlwa_icon.png');" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100)"></button>
+                        <button id="natlwaButton" class="image-button" style="background-image: url('exporthere\\natlwa_icon_gray.png');" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100)"></button>
                         <p style="color:purple;"> BlankScanner  </p>
 
                     </div>
@@ -572,6 +612,7 @@
                             <span class="username" style="color:#A10000;">nofreeWrenches</span>
                             <span class="timestamp">74h</span>
                             <div class="like-button"></div>
+                            <span class="likeCount">3</span>
                         </div>
                         <div class = 'comment'>
                             <span class="username" style="color: #6a006a;">wxxxetinthe%ocean</span>
@@ -605,6 +646,8 @@
                             <span class="username" style="color: teal;">allv1b3sKelc11</span>
                             <span class="timestamp">74h</span>
                             <span class="like-button"></span>
+                            <span class="likeCount">39</span>
+
                         </div>
                         <div class = 'comment'>
                             <span class="username" style="color: #2b0057;">EmpressofBlockB</span>
@@ -646,6 +689,8 @@
                             <span class="username" style="color: #ddcf12;">SlimyMemes</span>
                             <span class="timestamp">73h</span>
                             <div class="like-button"></div>
+                            <span class="likeCount">50</span>
+
                         </div>
                         <div class = 'comment'>
                             <span class="username" style="color: #000056;">HeyItsValinx</span>
@@ -656,7 +701,7 @@
                             </div>
                         </div>
                         <div class = 'comment'>
-                            <span class="username" style="color: #ddcf12;">SlimyMemesk</span>
+                            <span class="username" style="color: #ddcf12;">SlimyMemes</span>
                             <span class="timestamp">73h</span>
                             <div class="like-button"></div>
                             <div class="comment-body">
@@ -678,6 +723,8 @@
                                 <span class="username" style="color: #000056;">HeyItsValinx</span>
                                 <span class="timestamp">73h</span>
                                 <div class="like-button"></div>
+                                <span class="likeCount">64</span>
+
                             </div>
                             <div class = 'comment'>
                                 <span class="username" style="color: #ddcf12;">SlimyMemes</span>
@@ -707,6 +754,8 @@
                             <span class="username" style="color: teal;">RelanaDances</span>
                             <span class="timestamp">74h</span>
                             <div class="like-button"></div>
+                            <span class="likeCount">80</span>
+
                         </div>
                         <div class = 'comment'>
                             <span class="username" style="color: #2b0057;">EmpressofBlockB</span>
@@ -740,9 +789,58 @@
                     <div class="snap">
                         <img src="exporthere\\snap_fixed_6.png">
                         <div class="snapHeader" > 
-                            <span class="username" style="color: #ddcf12;">Relana</span>
+                            <span class="username" style="color: #ddcf12;">WRITE SHIT HERE LATER</span>
                             <span class="timestamp">74h</span>
                             <div class="like-button"></div>
+                        </div>
+                    </div>
+                    <div class="snap">
+                        <img src="exporthere\\snap_fixed_7.png">
+                        <div class="snapHeader" > 
+                            <span class="username" style="color: #000056;">BigtimeHits</span>
+                            <span class="timestamp">73h</span>
+                            <div class="like-button"></div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #2b0057;">RunFromBratos</span>
+                            <span class="timestamp">73h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>TBH these storylines keep getting stupider.</p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #000056;">BigtimeHits</span>
+                            <span class="timestamp">73h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>Nah, it's peak. Lowblood pits can't match this.</p>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="snap">
+                        <img src="exporthere\\snap_fixed_8.png">
+                        <div class="snapHeader" > 
+                            <span class="username" style="color: #2b0057;">MagnificentlyMercurial</span>
+                            <span class="timestamp">73h</span>
+                            <div class="like-button"></div>
+                            <span class="likeCount">126,873</span>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #000056;">PoseidonsPlayboy</span>
+                            <span class="timestamp">73h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>Babe please get in the game</p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #2b0057;">MagnificentlyMercurial</span>
+                            <span class="timestamp">73h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>Don't rush me.</p>  
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -753,7 +851,7 @@
                 <div class="app smoothOpen meditation" id="meditation">
                     <button class="back-button" onclick="closeApp()"></button>  
                     <div id="textDisplay"></div>
-                    <img class="smoothOpen" src="exporthere\\ineeri_icon.png" style="top:500px; right:290px;" height="30%" width="30%" > 
+                    <img class="smoothOpen" src="exporthere\\meditation_iso.png" style="top:500px; right:290px;" height="30%" width="30%" > 
                 </div>
 
                 <div class="app smoothOpen lighter" id="lighter">

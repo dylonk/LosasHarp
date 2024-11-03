@@ -96,17 +96,14 @@ const imagePaths = [
   "exporthere\\phonehomescreen_blank.png",
   "exporthere\\full_ineeri_darkbg.png",
   "exporthere\\full_ineeri_isolated_text.png",
-  "exporthere\\discord_white_bg.png", //images[10]
+  "exporthere\\discord_white_bg.png", 
   "exporthere\\full_kollei_darkbg.png",
   "exporthere\\full_kollei_isolated_text.png",
   "exporthere\\phone_text_battery.png", 
   "exporthere\\phone_discord_bg.png",
-  "exporthere\\phone_discord_gray.png", //images[15]
+  "exporthere\\phone_discord_gray.png", 
   "exporthere\\phone_discord_red.png",
-  "exporthere\\phone_icons_isolated.png",
-  "exporthere\\phone_icons_text_combo.png",
-  "exporthere\\phone_icons_text_isolated.png",
-  "exporthere\\phonegray.png",  //images[20]
+  "exporthere\\phonegray.png",  
   "exporthere\\discorpse.png", 
   "exporthere\\snapchat_iso.png", 
   "exporthere\\snap_fixed_1.png",
@@ -115,6 +112,8 @@ const imagePaths = [
   "exporthere\\snap_fixed_4.png",
   "exporthere\\snap_fixed_5.png",
   "exporthere\\snap_fixed_6.png",
+  "exporthere\\snap_fixed_7.png",
+  "exporthere\\snap_fixed_8.png",
   "exporthere\\snap_bevel_1.png",
   "exporthere\\ppic_1.png",
   "exporthere\\ppic_2.png",
@@ -165,7 +164,7 @@ photosApp.addEventListener("click", (event) => {
     const scale = Math.min(scaleX, scaleY); // Maintain aspect ratio
     //the photo needs to move right by
     const translateX = ((containerRect.left + containerRect.width / 2) - (rect.left + rect.width / 2))*1.25;
-    const translateY = ((containerRect.top + containerRect.height / 2) - (rect.top + rect.height / 2))*1.2;
+    const translateY = ((containerRect.top + containerRect.height / 2) - (rect.top + rect.height / 2))*1.22;
 
     currentPhoto.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
 
