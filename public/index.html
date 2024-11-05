@@ -26,16 +26,60 @@
             background: transparent;
             overflow: hidden;
         }
+        #controlsBox
+        {
+            position: absolute; /* Allows the box to be positioned relative to the canvas */ 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%);            
+            bottom: 20px;
+            height: 600px;
+            width: 1000px;
+            background-color: lightseagreen;
+            border: 10px solid black;
+            border-radius: 30px;
+            z-index: 1000;
+            align-content: center;
+        }
+        #controlsBox p
+        {
+            font-family:fantasy;
+            margin-left: 20px;
+            font-size: 2em;
+        }
+        #controlsButton{
+            position: fixed;
+            bottom: 20px;
+            left: 30px;
+            height: 100px;
+            width: 100px;
+            background-color: transparent;
+            border: none;
+
+
+        }
+        #controlsButton svg{
+            height: 100%;
+            width: 100%;
+            background-color: transparent;
+
+        }
         .photo-exit-button {
         user-select: none;
-        width: 3%;
-        height: 3%;
-        background-color: red;
+        width: 30px;
+        height: 30px;
         border: none;
-        position: absolute;
+        background-color: transparent;
+        position: absolute;  /* Absolute positioning keeps the element in the top right and out of the docflow */
         z-index: 16;
         top: 5px; /* Adjust this value to move the button lower */
         right: 5px; /* Adjust this value to move the button to the right */
+        }
+        .photo-exit-button svg  {
+            fill: black;
+            stroke: black;
+            stroke-width: 1;
+            width: 100%;
+            height: 100%;
         }
 
         .back-button {
@@ -71,26 +115,7 @@
         transform: translateY(-50%) rotate(-45deg);
     }
 
-    #curvedarrow {
-      position: relative;
-      width: 0;
-      height: 0;
-      border-top: 9px solid transparent;
-      border-right: 9px solid red;
-      transform: rotate(10deg);
-    }
-    #curvedarrow:after {
-      content: "";
-      position: absolute;
-      border: 0 solid transparent;
-      border-top: 3px solid red;
-      border-radius: 20px 0 0 0;
-      top: -12px;
-      left: -9px;
-      width: 12px;
-      height: 12px;
-      transform: rotate(45deg);
-    }
+
 
 
 
@@ -101,8 +126,8 @@
 
         }
 
-.smoothOpen:not(.expanded):not(.photo) {
-    transform: scale(0); /* photos work differently than other smoothopen objects, as they do not start at scale 0. */
+.smoothOpen:not(.expanded){
+    transform: scale(0); 
 }
 
         
@@ -175,7 +200,6 @@
         }
         .like-button:hover .heart-icon {
             transform: scale(1.25);
-            
             cursor: pointer;
         }
         .like-button.liked .heart-icon {
@@ -297,8 +321,8 @@
         {
             background-color: black;
             z-index: 2;
-            width: 32%;
-            height: 32%;
+            width: 29.5%;
+            height: 29.5%;
             margin: 2%;
             background-size: cover;
             position:relative;
@@ -528,6 +552,39 @@
     
     <div id="canvas-container">
         <canvas id="canvas" width="1700" height="800"></canvas>
+        <div id="controlsBox">
+            <p>Controls:</p>
+            <p>use the first two rows of keys to play the harp!</p>
+            <p>explore the phone with the mouse!</p>
+            <p>some Apps can be scrolled!</p>
+            <p>press x to exit an app,</p>
+            <p>and click the button in the bottom left if you forget any of this!</p>
+        </div>
+            <button id="controlsButton">
+                <svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 512.368 512.368" xml:space="preserve">
+<g>
+	<g>
+		<path d="M447.303,128.681c-0.427-1.259-0.875-3.264-1.408-5.525c-3.52-14.315-6.827-27.84-19.904-32.832l-62.08-23.616
+			c-12.032-4.565-25.515-2.923-36.139,4.48l-3.84,3.435c-3.115,3.563-7.339,8.021-10.347,10.88H199.197
+			c-2.539-2.667-5.931-6.592-8.768-10.112l-4.437-4.16c-10.624-7.424-24.149-9.131-36.117-4.523L87.73,90.324
+			c-13.013,4.949-16.277,18.325-19.755,32.512c-0.533,2.155-0.981,4.117-0.811,4.117c0,0,0.021,0,0.043-0.021
+			C46.045,168.66-54.606,379.902,39.623,442.26c13.483,8.917,31.424,7.509,43.691-3.456l73.856-66.219
+			c6.507-5.845,14.784-9.067,23.275-9.067h152.853c8.491,0,16.747,3.221,23.275,9.067l73.856,66.219
+			c6.955,6.229,15.616,9.408,24.277,9.408c6.955,0,13.888-2.069,19.883-6.293C557.746,383.572,482.823,202.494,447.303,128.681z
+			 M341.469,149.502c11.776,0,21.333,9.557,21.333,21.333c0,11.776-9.557,21.333-21.333,21.333s-21.333-9.557-21.333-21.333
+			S329.693,149.502,341.469,149.502z M213.469,256.169h-21.333v21.333c0,11.776-9.536,21.333-21.333,21.333
+			s-21.333-9.557-21.333-21.333v-21.333h-21.333c-11.797,0-21.333-9.557-21.333-21.333s9.536-21.333,21.333-21.333h21.333V192.17
+			c0-11.776,9.536-21.333,21.333-21.333s21.333,9.557,21.333,21.333v21.333h21.333c11.797,0,21.333,9.557,21.333,21.333
+			S225.266,256.169,213.469,256.169z M298.802,234.836c-11.776,0-21.333-9.557-21.333-21.333s9.557-21.333,21.333-21.333
+			s21.333,9.557,21.333,21.333S310.578,234.836,298.802,234.836z M341.469,277.502c-11.776,0-21.333-9.557-21.333-21.333
+			s9.557-21.333,21.333-21.333s21.333,9.557,21.333,21.333S353.245,277.502,341.469,277.502z M384.135,234.836
+			c-11.776,0-21.333-9.557-21.333-21.333s9.557-21.333,21.333-21.333s21.333,9.557,21.333,21.333S395.911,234.836,384.135,234.836z"
+			/>
+	</g>
+</g>
+</svg>
+            </button>
         <div id="phone">
             <div id="screen">   
 
@@ -542,7 +599,7 @@
                     </div>
                     <div class="app-wrapper">
                         <button id="snapchatButton" class="app-button" style="background-image: url('exporthere\\snapchat_iso.png');" onclick="openApp('snapchat')"></button>
-                        <p>Snapchat</p>
+                        <p>Troll Instagram</p>
                     </div>
                     <div class="app-wrapper">
                         <button id="meditationButton" class="app-button" style="background-image: url('exporthere\\meditate_iso.png');" onclick="openApp('meditation')"></button>
@@ -569,6 +626,16 @@
                     <div class ="message" id="kolleiMessage" style="background-color: black; background-image: url('exporthere/full_kollei_isolated_text.png');"></div>
                 </div>      
 
+                <div class="messageFrame smoothOpen" id="natlwaMessageFrame" style="background-color: transparent;">
+                    <button class="back-button" onclick="closeMessage()"></button>
+                    <div class ="message" id="natlwaMessage" style="background-color: black; background-image: url('exporthere/natwla_text_iso.png');"></div>
+                </div>      
+
+                <div class="messageFrame smoothOpen" id="meldilMessageFrame" style="background-color: transparent;">
+                    <button class="back-button" onclick="closeMessage()"></button>
+                    <div class ="message" id="meldilMessage" style="background-color: black; background-image: url('exporthere/meldil_text_iso.png');"></div>
+                </div>      
+
                 <div class="app smoothOpen discorpse" id="discorpse" style="background-color:rgb(27, 21, 21);">
                     <button class="back-button" onclick="closeApp()"></button>
                     <div class="logo">
@@ -588,13 +655,13 @@
                     </div>
 
                     <div class = "discorpseUser">   
-                        <button id="meldilButton" class="image-button" style="background-image: url('exporthere\\meldil_icon_gray.png');" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4000)"></button>
+                        <button id="meldilButton" class="image-button" style="background-image: url('exporthere\\meldil_icon_gray.png');" onclick="openMessage('meldilMessage','meldilMessageFrame',4000)"></button>
                         <p style="color:rgb(37, 126, 199);"> PoseidonsPlayboy  </p>
 
                     </div>
 
                     <div class = "discorpseUser">   
-                        <button id="natlwaButton" class="image-button" style="background-image: url('exporthere\\natlwa_icon_gray.png');" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100)"></button>
+                        <button id="natlwaButton" class="image-button" style="background-image: url('exporthere\\natlwa_icon_gray.png');" onclick="openMessage('natlwaMessage','natlwaMessageFrame',1100)"></button>
                         <p style="color:purple;"> BlankScanner  </p>
 
                     </div>

@@ -114,7 +114,9 @@ const imagePaths = [
   "exporthere\\snap_fixed_6.png",
   "exporthere\\snap_fixed_7.png",
   "exporthere\\snap_fixed_8.png",
-  "exporthere\\snap_bevel_1.png",
+  "exporthere\\snap_fixed_9.png",
+  "exporthere\\snap_fixed_10.png",
+  "exporthere\\snap_fixed_11.png",
   "exporthere\\ppic_1.png",
   "exporthere\\ppic_2.png",
   "exporthere\\ppic_3.png",
@@ -124,6 +126,28 @@ const imagePaths = [
 
 ];
 
+
+//svg icons
+var svgPhotoBackButton = `
+<svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 width="800px" height="800px" viewBox="0 0 489.394 489.394"
+	 xml:space="preserve">
+<g>
+	<path d="M375.789,92.867H166.864l17.507-42.795c3.724-9.132,1-19.574-6.691-25.744c-7.701-6.166-18.538-6.508-26.639-0.879
+		L9.574,121.71c-6.197,4.304-9.795,11.457-9.563,18.995c0.231,7.533,4.261,14.446,10.71,18.359l147.925,89.823
+		c8.417,5.108,19.18,4.093,26.481-2.499c7.312-6.591,9.427-17.312,5.219-26.202l-19.443-41.132h204.886
+		c15.119,0,27.418,12.536,27.418,27.654v149.852c0,15.118-12.299,27.19-27.418,27.19h-226.74c-20.226,0-36.623,16.396-36.623,36.622
+		v12.942c0,20.228,16.397,36.624,36.623,36.624h226.74c62.642,0,113.604-50.732,113.604-113.379V206.709
+		C489.395,144.062,438.431,92.867,375.789,92.867z"/>
+</g>
+</svg>
+`;
+
+var svgHeartIcon = `
+<svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+</svg>
+`;
 const photoUrls= [
   "exporthere/ppic_1.png",
   "exporthere/ppic_2.png",
@@ -151,10 +175,10 @@ photosApp.addEventListener("click", (event) => {
   if(event.target.classList.contains('photo')) {
     currentPhoto=event.target;//currentphoto is being used
     currentPhoto.classList.add('photoExpanded');
+    //I know this function is janky. Nobody has to tell me that.
     const rect = currentPhoto.getBoundingClientRect();
     const photosApp = document.querySelector('.photos');
     const containerRect = photosApp.getBoundingClientRect();
-
     console.log("container rect width="+ containerRect.width);
     console.log("rect width="+rect.width);
     console.log("rect left="+ rect.left);
@@ -162,7 +186,6 @@ photosApp.addEventListener("click", (event) => {
     const scaleX = containerRect.width / rect.width;
     const scaleY = (containerRect.height / rect.height);
     const scale = Math.min(scaleX, scaleY); // Maintain aspect ratio
-    //the photo needs to move right by
     const translateX = ((containerRect.left + containerRect.width / 2) - (rect.left + rect.width / 2))*1.25;
     const translateY = ((containerRect.top + containerRect.height / 2) - (rect.top + rect.height / 2))*1.22;
 
@@ -172,6 +195,7 @@ photosApp.addEventListener("click", (event) => {
         const backButton = document.createElement('button');
         backButton.textContent = 'Back'; // Customize the button label as needed
         backButton.classList.add('photo-exit-button'); // Add a class for styling
+        backButton.innerHTML = svgPhotoBackButton;
     
         // Append the back button to the expanded photo
         currentPhoto.appendChild(backButton);
@@ -299,7 +323,7 @@ class HarpString {
 
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-function playSound(soundId, shouldLoop=false) {   //function to easily play sound from ID
+function playSound(soundId, shouldLoop=false,volume=0.5) {   //function to easily play sound from ID, incluidng optional volume and looping args
     audioContext.resume().then(() => {
         const audioElement = soundId;
         if (!audioElement) {
@@ -309,6 +333,7 @@ function playSound(soundId, shouldLoop=false) {   //function to easily play soun
         }
         audioElement.loop=shouldLoop;
         audioElement.currentTime = 0; // Reset playback position
+        audioElement.volume = volume; // Set the volume
         audioElement.play();
     });
 }
@@ -325,7 +350,7 @@ function stopSound() {
 
 
 
-playSound(document.getElementById('desertWind'),true);//LOOPING WIND NOISE
+playSound(document.getElementById('desertWind'),true,1.0);//LOOPING WIND NOISE
 const pressedKeys = new Set();
 
 
@@ -422,6 +447,17 @@ document.addEventListener('keyup', function(event) {
   pressedKeys.delete(keyReleased);
 });
 
+//TUTORIAL CONTROLS. When the buttons clicked, show the controls box, when the controlsbox is clicked, hide it.
+const controlsBox=document.getElementById('controlsBox'); 
+const controlsButton=document.getElementById('controlsButton'); 
+controlsBox.addEventListener('click', () => {
+  controlsBox.style.display="none";
+});
+document.addEventListener('keydown', () => { controlsBox.style.display = "none"; });
+controlsButton.addEventListener('click', () => {
+  controlsBox.style.display="block";
+});
+
 
 
 
@@ -446,16 +482,10 @@ let scrollTop;
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  console.log ("running liebutton");
-  var svgIcon = `
-  <svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-  </svg>
-`;
+
   var likeButtons = document.querySelectorAll('.like-button');
   likeButtons.forEach(function(button) {
-    button.innerHTML = svgIcon;
-    console.log("FOUND A LIKE BUTTONG");
+    button.innerHTML = svgHeartIcon;
     button.addEventListener('click', function() { // like button functionality
       this.classList.toggle("liked");
       console.log("should have liked image");
@@ -472,7 +502,11 @@ function changeBackground(button) {
   button.style.backgroundImage = newBg;
 }
 
-
+//kind of a weird function, probably should have set up way better. Adds the correct background image to all the frames. Looking back, this shouldn't require js. I'm as confused as you are.
+//like it's set up as if it's all the same message frame just with changing backgrounds, but theres still 4 messageframes? Did I really not want to write 4 near identical css items that badly?? what the fuck.
+//the more I look at all the message functionality the more horrifying it is. I think it all started with me just going with it when Lily sent all the messagelogs as giant images, instead of letting her know it would be way easier to just do it all in html.
+//and I have to manually input the size of the background images?? If I wasn't almost done with this I'd rewrite it.
+//Im sorry, me.
 function setMessageFrameBackground(frameId, imageUrl) {
   const frame = document.getElementById(frameId);
   if (frame) {
@@ -482,12 +516,20 @@ function setMessageFrameBackground(frameId, imageUrl) {
 
 setMessageFrameBackground('ineeriMessageFrame', 'exporthere/ineeri_red_bg.png');
 setMessageFrameBackground('kolleiMessageFrame', 'exporthere/kollei_red_bg.png');
+setMessageFrameBackground('natlwaMessageFrame', 'exporthere/natlwa_red_bg.png');
+setMessageFrameBackground('meldilMessageFrame', 'exporthere/meldil_red_bg.png');
 
 
 
 
-function openApp(newApp)
-{
+
+//closes app if x key is pressed
+document.addEventListener('keydown', (event) => { 
+  if (event.key === 'x' || event.key === 'X') { closeApp}
+});
+
+
+  function openApp(newApp) {
   currentApp=document.getElementById(newApp);
   currentApp.classList.add('expanded');
   if(currentApp.classList.contains("scrollable"))
@@ -498,7 +540,7 @@ function openApp(newApp)
   {
     console.log(currentApp);
     if(!audioContext){audioContext = new AudioContext();} audioContext.resume();
-    playSound(document.getElementById('calmMusic'),true);
+    playSound(document.getElementById('calmMusic'),true,0.2);
     currentMusic=document.getElementById('calmMusic');
     startAnimation(textDisplay);
   }
