@@ -90,40 +90,6 @@ const imagePaths = [
   "exporthere\\phonecameratop.png",
   "exporthere\\phone_blue_toplayer.png",
   "exporthere\\bigharp_buttons_toplayer.png",
-  "exporthere\\ineeri_red_bg.png",  //images [5]
-  "exporthere\\kollei_red_bg.png",
-  //last image drawn in draw function, all other images must be drawn as needed.  
-  "exporthere\\phonehomescreen_blank.png",
-  "exporthere\\full_ineeri_darkbg.png",
-  "exporthere\\full_ineeri_isolated_text.png",
-  "exporthere\\discord_white_bg.png", 
-  "exporthere\\full_kollei_darkbg.png",
-  "exporthere\\full_kollei_isolated_text.png",
-  "exporthere\\phone_text_battery.png", 
-  "exporthere\\phone_discord_bg.png",
-  "exporthere\\phone_discord_gray.png", 
-  "exporthere\\phone_discord_red.png",
-  "exporthere\\phonegray.png",  
-  "exporthere\\discorpse.png", 
-  "exporthere\\snapchat_iso.png", 
-  "exporthere\\snap_fixed_1.png",
-  "exporthere\\snap_fixed_2.png",
-  "exporthere\\snap_fixed_3.png",
-  "exporthere\\snap_fixed_4.png",
-  "exporthere\\snap_fixed_5.png",
-  "exporthere\\snap_fixed_6.png",
-  "exporthere\\snap_fixed_7.png",
-  "exporthere\\snap_fixed_8.png",
-  "exporthere\\snap_fixed_9.png",
-  "exporthere\\snap_fixed_10.png",
-  "exporthere\\snap_fixed_11.png",
-  "exporthere\\ppic_1.png",
-  "exporthere\\ppic_2.png",
-  "exporthere\\ppic_3.png",
-  "exporthere\\ppic_4.png",
-  "exporthere\\ppic_5.png",
-  "exporthere\\ppic_6.png",
-
 ];
 
 
@@ -148,6 +114,10 @@ var svgHeartIcon = `
   <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
 </svg>
 `;
+
+
+
+//photo functionality
 const photoUrls= [
   "exporthere/ppic_1.png",
   "exporthere/ppic_2.png",
@@ -155,6 +125,9 @@ const photoUrls= [
   "exporthere/ppic_4.png",
   "exporthere/ppic_5.png",
   "exporthere/ppic_6.png",
+  "exporthere/ppic_7.png",
+  "exporthere/ppic_8.png",
+  "exporthere/ppic_9.png",
 ]
 
 const photosApp = document.getElementById('photos');
@@ -172,6 +145,7 @@ photoUrls.forEach((imageUrl) => {
 
 //open photo from thumbnail when clicked
 photosApp.addEventListener("click", (event) => {
+  if(!currentPhoto){
   if(event.target.classList.contains('photo')) {
     currentPhoto=event.target;//currentphoto is being used
     currentPhoto.classList.add('photoExpanded');
@@ -208,24 +182,100 @@ photosApp.addEventListener("click", (event) => {
           currentPhoto=null;
         });
       }
+    }
 })
+//file functionality
+
+
+const tracksList=[
+"bitcrusher",
+"catThing",
+"sparseThing",
+"pianoThing",
+"otherPianoThing",
+"coolBassChords"
+]
+
+//music container and control buttons
+const musicContainer = document.getElementById('music-container');
+const playButton = document.getElementById('play-button');
+const pauseButton = document.getElementById('pause-button');
+
+let currentTrack = null; // To keep track of the selected audio element
+
+
+function createMusicFileElement(track) {  //creates music file element
+  const div = document.createElement('div');  //creates the div
+  div.textContent = track;    //the div element has the name of the track
+  div.id="track " + track;
+  div.classList.add('musicfile');  //its now a music file
+
+  div.onclick = () => {   //when the track is clicked
+    // Highlight the selected track
+    document.querySelectorAll('.musicfile').forEach(file => file.classList.remove('selected'));//unselects other music files
+    stopMusic(currentTrack);//stops the currenttrack
+    div.classList.add('selected');
+
+    // Set the current track
+    currentTrack = document.getElementById(track);
+    console.log("current track is",currentTrack);
+  };
+
+
+
+
+  return div;
+}
+
+tracksList.forEach(track => { //populates files app
+  const musicFileElement = createMusicFileElement(track);
+  musicContainer.appendChild(musicFileElement);
+});
+
+playButton.onclick = () => {
+  if (currentTrack) {
+    console.log("playing with playbutton current track", currentTrack);
+    playSound(currentTrack, true, 0.2,true); // Play the selected track with resuming capabilities.
+    currentMusic=currentTrack;//updates the current track
+  } else {
+    alert('Please select a track to play.');
+  }
+};
+
+
+pauseButton.onclick = () => {
+  console.log("should pause track");
+  if (currentTrack) {
+    pauseTrack(currentTrack); // PAUSES the selected track. not necessarily stops
+  } else {
+    console.log("no track to stop");
+  }
+};
+
+
 
 //PRELOAD LOADS ALL IMAGES, IDS THEM ACCORDINGLY AND DRAWS THE FIRST 5.
+
+
 function preload() {
+  console.log('Memory before:', performance.memory); // if available in your browser
    //Loads all images
   for (let i = 0; i < imagePaths.length; i++) {
     thisImage=loadImage(imagePaths[i]);
     //thisImage.id=imagePaths[i];
     images[i] = thisImage;
-    console.log("Image " + i + " loaded?");
   }
+  console.log('Memory after:', performance.memory); // if available in your browser
+
 }
 
 
 
-
+let backgroundCanvas;
+let buttonCanvas;
 function setup() {
   createCanvas(1700, 800);
+  
   strings.push(new HarpString(30, 115, 80)); 
   strings.push(new HarpString( 80, 140, 120));
   strings.push(new HarpString( 135, 153, 220));
@@ -235,29 +285,41 @@ function setup() {
   strings.push(new HarpString( 320, 60, 600));
   strings.push(new HarpString( 360, 15, 700));
   strings.push(new HarpString( 400, 0, 800));
-  strings.push(new HarpString( 450, 0, 900));
-  strings.push(new HarpString( 500, 0, 1000));
-  strings.push(new HarpString( 550, 0, 1100));
-  strings.push(new HarpString( 600, 0, 1100));
-}
+  strings.push(new HarpString( 440, 0, 900));
+  strings.push(new HarpString( 480, 0, 1000));
+  strings.push(new HarpString( 520, 0, 1100));
+  strings.push(new HarpString( 560, 0, 1100));
 
+
+  backgroundCanvas = createGraphics(1700, 800); //background canvas below harp strings
+  backgroundCanvas.clear();
+  
+  for (let i = 0; i < 4; i++) {
+    backgroundCanvas.image(images[i], 0, 0);
+  }
+
+  buttonCanvas = createGraphics(1700, 800); //button canvas above harp strings
+  buttonCanvas.clear();
+  buttonCanvas.image(images[4], 0, 0);
+
+  
+}
 
 
 function draw() {
   //background(255);
   // Draw images first
-  let x = 0;
-  let y = 0;
-  for (let i = 0; i < 4; i++) {
-    image(images[i], x, y); // Adjust size and position as needed 
-  }
+  image(backgroundCanvas, 0, 0);
+
+
+
   //displays harp strings
   for (let string of strings) {
     string.display();
   }
 
 
-  image(images[4], x, y); //loads harp buttons after strings
+  image(buttonCanvas, 0, 0);
 }
 
 
@@ -323,7 +385,7 @@ class HarpString {
 
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-function playSound(soundId, shouldLoop=false,volume=0.5) {   //function to easily play sound from ID, incluidng optional volume and looping args
+function playSound(soundId, shouldLoop=false,volume=0.5,resume=false) {   //function to easily play sound from ID, incluidng optional volume and looping args
     audioContext.resume().then(() => {
         const audioElement = soundId;
         if (!audioElement) {
@@ -332,13 +394,24 @@ function playSound(soundId, shouldLoop=false,volume=0.5) {   //function to easil
             audioElement.source = source; // Store the source to avoid creating it multiple times
         }
         audioElement.loop=shouldLoop;
-        audioElement.currentTime = 0; // Reset playback position
+        if(!resume){audioElement.currentTime = 0;} // Reset playback position if not set to resume
         audioElement.volume = volume; // Set the volume
         audioElement.play();
     });
+    console.log("played sound", soundId);
+
 }
-function stopSound() {
+function stopMusic() {
   if (currentMusic) {
+      console.log("stopping current track", currentMusic);
+      currentMusic.pause(); // Pause the audio element
+      currentMusic=null;
+  }
+}
+
+function pauseTrack() {
+  if (currentMusic) {
+      console.log("pausing current track", currentMusic);
       currentMusic.pause(); // Pause the audio element
   }
 }
@@ -356,6 +429,7 @@ const pressedKeys = new Set();
 
 
 //HARP CONTROLS
+
 document.addEventListener('keydown', function(event) {
     if(!audioContext){audioContext = new AudioContext();} 
     audioContext.resume();
@@ -463,9 +537,10 @@ controlsButton.addEventListener('click', () => {
 
 //PHONE CONTROLS
 //apps are handled with all apps technically being there at once, only expanding and unexpanding to fit the screen when opened
-const trollian=document.getElementById('trollian'); 
+const discorpse=document.getElementById('discorpse'); 
 const meditation=document.getElementById('meditation');
 const garageband=document.getElementById('garageband'); 
+const files=document.getElementById('files'); 
 const homeScreen= document.getElementById('homeScreen'); 
 const phone=document.getElementById('phone');
 const snapchat=document.getElementById('snapchat');
@@ -478,7 +553,7 @@ let maxScrollY; //used for message background image max.
 let currentMessage;
 let currentMessageFrame;
 let currentApp=null;
-let scrollTop;
+let scrollTop=0;;
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -493,6 +568,22 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+const dropdown = document.querySelector('.dropdown');
+const dropdownButton = document.querySelector('.dropdown-button');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+
+dropdownButton.addEventListener('click', () => {
+    // Toggle the visibility of the dropdown menu
+    const isMenuVisible = dropdownMenu.style.display === 'block';
+    dropdownMenu.style.display = isMenuVisible ? 'none' : 'block';
+});
+
+// Close the dropdown menu if clicking outside the dropdown
+document.addEventListener('click', (event) => {
+    if (!dropdown.contains(event.target)) {
+        dropdownMenu.style.display = 'none';
+    }
+});
 
 //below function changes the background of a button to it's alt when clicked
 function changeBackground(button) {
@@ -523,9 +614,10 @@ setMessageFrameBackground('meldilMessageFrame', 'exporthere/meldil_red_bg.png');
 
 
 
-//closes app if x key is pressed
+//closes app or message if x key is pressed, 
 document.addEventListener('keydown', (event) => { 
-  if (event.key === 'x' || event.key === 'X') { closeApp}
+  if ((event.key === 'x' || event.key === 'X')&& !currentMessage) { closeApp()}
+  else(closeMessage());
 });
 
 
@@ -541,6 +633,7 @@ document.addEventListener('keydown', (event) => {
     console.log(currentApp);
     if(!audioContext){audioContext = new AudioContext();} audioContext.resume();
     playSound(document.getElementById('calmMusic'),true,0.2);
+    pauseTrack(currentTrack);
     currentMusic=document.getElementById('calmMusic');
     startAnimation(textDisplay);
   }
@@ -558,9 +651,14 @@ function closeApp() {
     currentApp.removeEventListener('mousedown',handleMouseDown,);
   }
   currentApp.classList.remove('expanded');
+  if(currentApp==meditation) //the music from files persists upon app closing (meditation does not though)
+  {
+    console.log("current app is", currentApp, "so music stop");
+    stopMusic(currentMusic);
+    currentMusic=null;
+  }
   currentApp=null; 
-  stopSound(currentMusic);
-  currentMusic=null;
+
 
 
 }
@@ -571,18 +669,15 @@ function closeApp() {
 
 
 
-
-//TROLLIAN CONTROLS
-//openMessage loads a new image url, resets backgroundposition, and should set the trollian window to visible
-function openMessage(newMessage,newMessageFrame,newBgSize) {
+//discorpse CONTROLS
+//openMessage loads a new image url, resets backgroundposition, and should set the discorpse window to visible
+function openMessage(newMessage,newMessageFrame) {
+  currentApp=document.getElementById(newMessage);//sets app to this new message to allow scrolling
   currentMessage=document.getElementById(newMessage); //sets currentMessage to correct message 
   currentMessageFrame=document.getElementById(newMessageFrame);  //setscurrent MessageFrame to the new frame
-  bgSize=newBgSize;
   currentMessageFrame.classList.add('expanded');//expands the current message frame, and the message within
-  console.log(newBgSize);
-  currentMessage.style.backgroundPositionY=0;
-  console.log(currentMessage.id);
   currentMessage.addEventListener('mousedown',handleMouseDown,);
+  console.log(currentApp);
 }
 
 function closeMessage() {
@@ -590,100 +685,67 @@ function closeMessage() {
   currentMessage.removeEventListener('mousedown',handleMouseDown);
   currentMessage=null; 
   currentMessageFrame=null;  
-  bgSize=null;
-  trollian.classList.add('expanded');
-  console.log("trollian should be back open for message");
+  discorpse.classList.add('expanded');
+  currentApp=discorpse;//sets current app back to discorpse when message closed
+  console.log("discorpse should be back open for message");
 }
 
 
+document.getElementById("discorpseSongLink").addEventListener('click', () => {
+  closeMessage(currentMessage);
+  closeApp(currentApp);
+  openApp("files");
+  document.getElementById("track coolBassChords").click();  
+});
 
 
-//below three functions allow for the scrolling of ALL APPS. NOT JUST TROLLIAN MESSAGES.
+
+//below three functions allow for the scrolling of ALL APPS. NOT JUST discorpse MESSAGES.
 
 
 function handleMouseDown(e) {
   isDragging = true;  //sets is dragging to true
-  if(currentMessage)//this is the scroll behavior for a message
-  {
-    startY = e.pageY;
-    initialBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
-    maxScrollY = bgSize * -1;
-    console.log("mouseDownOnMessage");
-  }
-  else  //this is the scroll behavior for an app
-  {
-    currentApp.classList.add('active');
-    startY = e.pageY;
-    scrollTop = currentApp.scrollTop;
-    console.log("mouseDownOnApp");
-  }
+  // Removed currentMessage handling
+  console.log("current app is ",currentApp);
+  startY = e.pageY;
+  scrollTop = currentApp.scrollTop;
+  console.log("mouseDownOnApp");
+  console.log("scrolltop =",currentApp.scrollTop);
+
+  console.log(currentApp);
+
 }
 
 
 document.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-      requestAnimationFrame(() => {
-        const deltaY = e.pageY - startY;  //deltaY is mouse movement
-        if(currentMessage)
-        {
-          currentMessage.style.backgroundPositionY = `${initialBackgroundPositionY + deltaY}px`;  //drags current message
-        }
-        else//behavior for scrolling app
-        {
-          const y = e.pageY - currentApp.offsetTop;
-          const walk = (y - startY) * 2; // Scroll-fast
-          currentApp.scrollTop = scrollTop - walk;
-          console.log("scrolling app");
-        }
-      
+  if (isDragging) {
+    requestAnimationFrame(() => {
+      const deltaY = e.pageY - startY;  //deltaY is mouse movement
+      // Removed currentMessage handling
+      const y = e.pageY - currentApp.offsetTop;
+      console.log(y);
+
+      const walk = (y - startY) * 2; // Scroll-fast
+      console.log(walk);
+
+      currentApp.scrollTop = scrollTop - walk;
+      console.log(currentApp);
+
+      console.log("scrolling app");
     });
-    }
+  }
 });
 
 
 document.addEventListener('mouseup', () => {
   if(isDragging){
-    isDragging=false;
-
-    if(currentMessage)
-    {
-      const currentBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
-      if (currentBackgroundPositionY > 0) 
-        {   //if the background is too far up, slingshot it back down
-          console.log("ONSCREEN, BG TOO FAR UP, BOUNCE");
-          currentMessage.style.backgroundPositionY = '0px';
-        } 
-      else if (currentBackgroundPositionY < maxScrollY) 
-        { //if the background is too far down, slingshot it back up
-          currentMessage.style.backgroundPositionY = `${maxScrollY}px`;
-        }
-      }
-      console.log("mouseUpMessage");
-    }
-
-    else
-    {
-
-    }
+    isDragging = false;
+    // Removed currentMessage handling
+  }
 });
 
 phone.addEventListener('mouseleave', () => {  
   console.log("CURSOR LEFT PHONE");
-  isDragging=false;
-  if(currentMessage)
-  {
-    const currentBackgroundPositionY = parseInt(window.getComputedStyle(currentMessage).backgroundPositionY, 10);
-    if (currentBackgroundPositionY > 0) 
-    {   //if the background is too far up, slingshot it back down
-      console.log("OFFSCREEN, BG TOO FAR UP, BOUNCE");
-      currentMessage.style.backgroundPositionY = '0px';
-    } 
-    else if (currentBackgroundPositionY < maxScrollY) 
-    { //if the background is too far down, slingshot it back up
-      currentMessage.style.backgroundPositionY = `${maxScrollY}px`;
-    }
-  }
-
+  isDragging = false;
+  // Removed currentMessage handling
 });
-
-

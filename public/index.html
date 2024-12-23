@@ -12,6 +12,10 @@
             overflow:hidden;
            
         }
+        *:focus 
+        {
+        outline: none;
+        }
         :root 
         {
             user-select: none;
@@ -61,7 +65,6 @@
             height: 100%;
             width: 100%;
             background-color: transparent;
-
         }
         .photo-exit-button {
         user-select: none;
@@ -81,40 +84,6 @@
             width: 100%;
             height: 100%;
         }
-
-        .back-button {
-        user-select: none;
-        width: 3%;
-        height: 3%;
-        background-color: transparent;
-        border: none;
-        position: fixed;
-        z-index: 16;
-        top: 5px; /* Adjust this value to move the button lower */
-        left: 5px; /* Adjust this value to move the button to the right */
-        }
-
-        .back-button::before,
-        .back-button::after {
-        content: '';
-        position: absolute;
-        width: 15px;
-        height: 3px;
-        background-color: black;
-    }
-
-    .back-button::before {
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%) rotate(45deg);
-    }
-
-    .back-button::after {
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%) rotate(-45deg);
-    }
-
 
 
 
@@ -143,17 +112,24 @@
         }
         .message
         {
+            overflow: scroll;
             user-select: none;
             width: 100%;
             height: 100%;
             position: relative;
             z-index: 1;
-            background-size: cover;
-            background-attachment: scroll;
-            background-position:0,0;
-            transition: background-position 0.3s ease-out;
-            background-repeat:no-repeat;
             background-color: black;
+            padding-bottom: 0px;
+        }
+
+        .message p
+        {
+            font-size: 1.5em;
+            font-family: 'Courier New', Courier, monospace;
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-top: 0%;
+            margin-bottom: 1%;
         }
         .lighter
         {   
@@ -173,7 +149,7 @@
             user-select: none;
             font-family: Arial, Helvetica, sans-serif;
         }
-        .snapchat::-webkit-scrollbar {
+        .app::-webkit-scrollbar {
              display: none;
         }
 
@@ -275,6 +251,29 @@
         font-size: 50px;
     }
 
+    .dropdown {
+            position: relative;
+            display: inline-block;
+            background-color: rgb(255, 0, 0);
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .dropdown p {
+            position: relative;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            margin-top: 0;
+            margin-bottom: 0;
+        }    
+
+        .dropdown-button {
+            display: inline-block;
+            background-color: #000000;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
     .comment .username {
     font-weight: bold;
     }
@@ -321,8 +320,8 @@
         {
             background-color: black;
             z-index: 2;
-            width: 29.5%;
-            height: 29.5%;
+            width: 28%;
+            height: 28%;
             margin: 2%;
             background-size: cover;
             position:relative;
@@ -382,7 +381,6 @@
             position:absolute;
             z-index: 10;
             transform: translate(-80%, -80%);
-            overflow: hidden;
             background-color: black;
             background-repeat: no-repeat;
             background-size: cover;
@@ -438,6 +436,83 @@
             align-content: flex-start; /* Ensures all items align at the start of the row */
 
         }
+
+        #garageband {
+            background-color: antiquewhite;
+            justify-items: center;
+            align-items: center;
+
+        }
+
+        #garageband p{
+            font-size: 2em;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+        }
+
+        #files{
+            background-color: rgb(71, 127, 167);
+        }
+        #music-container {
+    display: flex;
+    flex-direction: column;
+}
+
+        #play-button{
+            cursor: pointer;
+            position: absolute;
+            bottom: 5%;
+            height: 30%;
+            width: 30%;
+            background-color: transparent;
+            border: none;
+
+
+        }
+        #play-button svg{
+            height: 100%;
+            width: 100%;
+            background-color: transparent;
+            
+        }
+        #pause-button{
+            cursor: pointer;
+            position: absolute;
+            bottom: 5%;
+            right:0%;
+            height: 30%;
+            width: 30%;
+            background-color: transparent;
+            border: none;
+
+
+        }
+        #pause-button svg{
+            height: 100%;
+            width: 100%;
+            background-color: transparent;
+        }
+
+        .selected
+        {
+            background-color: #0691cd !important;
+        }
+
+        .musicfile {
+    background-color: rgb(145, 204, 247);
+    padding: 15px;
+    border-bottom-right-radius: 20px;
+    height: 45px !important;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 35px;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
         .discorpse {
         display: flex;
@@ -561,7 +636,7 @@
             <p>and click the button in the bottom left if you forget any of this!</p>
         </div>
             <button id="controlsButton">
-                <svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                <svg fill="#000001" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 	 viewBox="0 0 512.368 512.368" xml:space="preserve">
 <g>
 	<g>
@@ -613,43 +688,284 @@
                         <button id="photosButton" class="app-button" style="background-image: url('exporthere\\photos_iso.png');" onclick="openApp('photos')"></button>
                         <p>Photos</p>
                     </div>
+                    <div class="app-wrapper">
+                        <button id="filesButton" class="app-button" style="background-image: url('exporthere\\files_iso.png');" onclick="openApp('files')"></button>
+                        <p>Troll Files</p>
+                    </div>
                 </div>
                 
                     
                 <div class="messageFrame smoothOpen" id="ineeriMessageFrame" style="background-color: transparent;">
                     <button class="back-button" onclick="closeMessage()"></button>
-                    <div class ="message" id="ineeriMessage" style="background-color: black;  background-image: url('exporthere/full_ineeri_isolated_text.png');"></div>
+                    <div class ="message app scrollable" id="ineeriMessage" style="background-color: black;color: #57007f;">
+                        <p>PLACEHOLDER</p>
+
+                        <p>MM: Y00h00! P0rres, darl1ng, are y0u g01ng t0 c0nnect t0 my game, 0r what? 1t’s n0t p0l1te t0 keep a lady wa1t1ng.</p>
+                        <p>MM: Hell0?</p>
+                        <p>MM: Bah, 1 d0n’t kn0w why 1 expected pr0mptness fr0m the l1kes 0f y0u. Y0u c0uldn’t be 0n t1me 1f y0ur l1fe depended 0n 1t.</p>
+                        
+                        <p><span style="color: #ffffff;">-- silentSymphony</span> <span style="color: #252d89;">[SS]</span> <span style="color: #ffffff;">is an idle troll! --</span></p>
+                        
+                        <p>MM: Except, see, y0ur l1fe *d0es* depend 0n 1t. As well as m1ne, f0r that matter, s0 y0u’d better f1n1sh up w1th y0ur l1ttle d1sappear1ng act and get y0ur rear 1n gear.</p>
+                        <p>MM: Ser10usly! 1 d0n’t have all n1ght! C0nnect t0 my stup1d game already.</p>
+                        <p>MM: Ugh.</p>
+                        <p>MM: 1 g0t b0red and helped F0rtun enter. We als0 v0ted t0 make me leader, because G0d kn0ws that ne1ther y0u n0r M0r1ah c0uld be entrusted w1th anyth1ng rem0tely resembl1ng resp0ns1b1l1ty.</p>
+                        <p>MM: 1t was qu1te fasc1nat1ng, really. She had t0 play Blackjack t0 get 1n. 1t was exactly as funny as y0u’d th1nk. Y0u m1ssed 0ut.</p>
+                        <p>MM: And her planet 1s remarkably beaut1ful- a c0l0rful m1asma 0f t0x1c gases. 1t makes me 1ncred1bly exc1ted t0 see what my land am0unts t0.</p>
+                        <p>MM: 1f 0nly *s0me0ne* w0uld help me *enter* already!</p>
+                        
+                        <p><span style="color: #ffffff;">-- silentSymphony</span> <span style="color: #252d89;">[SS]</span> <span style="color: #ffffff;">is an idle troll! --</span></p>
+                        
+                        <p>MM: Y0u are really start1ng t0 test my pat1ence! What 1n G0d’s name c0uld y0u p0ss1bly be busy w1th r1ght n0w! 1s SGRUB n0t 1nterest1ng en0ugh f0r y0u? G0tta dev0te all y0ur RAM t0 d0wnl0ad1ng S0l1ta1re? Can’t spare 0ne measly l1ttle sec0nd f0r l1ttle 0ld me?</p>
+                        <p>MM: 0h, wh0 am 1 k1dd1ng. S0l1ta1re 1s an amaz1ng game. 1f y0u were actually pre0ccup1ed w1th S0l1ta1re, 1 w0uld maybe p0ss1bly f0rg1ve y0u a l1ttle b1t.</p>
+                        <p>MM: G0d fuck1ng damn 1t, where ARE y0u?! Y0ur 0ne s1ngle j0b r1ght n0w 1s t0 get me 1nt0 the game, and y0u are fa1l1ng!</p>
+                        <p>MM: 1f th1s 1s supp0sed t0 be vengeance f0r the W1ggler Dr1ver p0ster, 1t 1sn’t funny! 1 am ser10usly 1n danger r1ght n0w!</p>
+                        <p>MM: There are mete0rs fall1ng fr0m the fuck1ng sky and y0u can’t be assed t0 l00k at y0ur g0ddamned ph0ne!</p>
+                        <p>MM: L00K AT Y0UR PH0NE!!!</p>
+                        <p>MM: L00K AT 1T!!!!!!!!!</p>
+                        <p>MM: G0d DAMN 1t!!!!!!!!!!!!! P0rres!!!!</p>
+                        <p>MM: Meld1l can’t get ah0ld 0f y0u e1ther, s0 1’m guess1ng that s0me h0rr1ble SBURB m0nster r1pped y0u asunder and n0w y0u’re dead.</p>
+                        <p>MM: G00d fuck1ng r1ddance.</p>
+                        
+                        <p><span style="color: #ffffff;">-- silentSymphony</span> <span style="color: #252d89;">[SS]</span> <span style="color: #ffffff;">is an idle troll! --</span></p>
+                        
+                        <p>MM: The mete0rs are cl0ser n0w. They’re all any0ne 1s talk1ng ab0ut. Altern1a under s1ege! K1d planet at r1sk 0f catastr0ph1c ru1n! Ancestral 0r1g1n 0f tr0ll c1v1l1zat10n teeter1ng 0n the br1nk! They can’t bel1eve the Lum1nary w0uld let th1s happen. A l0t 0f adults are speculat1ng that she d1d 1t t0 send a message.</p>
+                        <p>MM: 0f c0urse, 1t’s n0th1ng that bu1ld1ng dr0nes can’t f1x. B1ll10ns w1ll d1e fr0m earthquakes and tsunam1s and dust cl0uds bl0ck1ng 0ut the sun, but l1fe g0es 0n.</p>
+                        <p>MM: 1f 0nly 1 weren’t AB0UT T0 BE 0NE 0F TH0SE B1LL10NS,</p>
+                        <p>MM: Y0U FUCK1NG ASSH0LE.</p>
+                        <p>MM: Th1s 1s s0me truly he1n0us sh1t and y0u kn0w 1t. What d1d 1 ever d0 t0 y0u? D0 y0u really hate me that much f0r steal1ng y0ur best br0 away? Gr0w up. 1f y0u were 1nt0 h1m, y0u sh0uld’ve made y0ur m0ve wh1le y0u had the chance, 1nstead 0f 0rchestrat1ng h1s matespr1t’s h0rr1fy1ng dem1se l1ke a FUCK1NG P1ECE 0F SH1T.</p>
+                        <p>MM: Y0U’RE S0 FUCK1NG 1NC0NS1DERATE 1’M G01NG T0 D1E 0UT HERE AND 1T’S Y0UR FAULT</p>
+                        <p>MM: WHY 1S 1T S0 C0MPLETELY 1MP0SS1BLE F0R Y0U T0 TH1NK AB0UT ANY0NE 0THER THAN Y0URSELF</p>
+                        <p>MM: 0H P00R P1T1FUL P0RRES! H1S L1FE 1S S0 AWFUL! SH0ULD WE THR0W A PARTY?! CLAP Y0U 0N THE SH0ULDER AND AP0L0G1ZE UNT1L Y0U GET Y0UR HEAD 0UT 0F Y0UR ASS AND START TH1NK1NG AB0UT THE NEEDS 0F 0THERS?!?!?!?!?!?!</p>
+                        <p>MM: FUCK Y0U FUCK Y0U FUCK Y0U FUCK Y</p>
+                        
+                        <p><span style="color: #ffffff;">-- silentSymphony</span> <span style="color: #252d89;">[SS]</span> <span style="color: #ffffff;">is an idle troll! --</span></p>
+                        
+                        <p>MM: Ahem.</p>
+                        <p>MM: 0kay, s0.</p>
+                        <p>MM: Th1ngs m1ght’ve been sa1d 1n the heat 0f the m0ment that were a l1ttle uncalled f0r.</p>
+                        <p>MM: 1 th1nk we can b0th agree that we d1dn’t handle th1s s1tuat10n as well as we c0uld’ve. But can y0u blame me? 1 th0ught 1 was g01ng t0 d1e. That w0uld send any0ne 1nt0 h1str10n1cs.</p>
+                        <p>MM: Even th0ugh 1t turns 0ut 1 was r1ght.</p>
+                        <p>MM: Yes, y0u heard 1t here f1rst. Wh1le 1 clung desperately t0 the back 0f my lusus’ shell, t0ssed w1ldly by r0ar1ng water, the sky bl0tted 0ut by dust and calam1ty…</p>
+                        <p>MM: A wave sunk us, and 1 dr0wned, and 1t fuck1ng sucked. S0 1f y0u’re ever w0nder1ng what 1t’s l1ke t0 ch0ke 0n seawater and fumble bl1ndly f0r a1r 1n the darkness 0f a s1nk1ng h1ve, feel free t0 ask me.</p>
+                        <p>MM: “But 1neer1!”</p>
+                        <p>MM:(That’s y0u by the way, ask1ng me a quest10n.)</p>
+                        <p>MM: “1neer1, 1f y0u’re dead, h0w c0me y0u’re st1ll s0 h0t, and n0t a bl0ated c0rpse?”</p>
+                        <p>MM: Great quest10n! Y0u h0rny p1ece 0f sh1t, 1’m s0 glad y0u asked! We1rd th1ng t0 w0nder, but wh0 am 1 t0 judge?</p>
+                        <p>MM: As 1t s0 turns 0ut, there 1s l1fe bey0nd death, and 1 was r1ght all al0ng. Y0u all made fun 0f me f0r bel1ev1ng 1n a h1gher p0wer, but d0n’t y0u l00k s1lly n0w!</p>
+                        <p>MM: 1 get t0 be my beaut1ful, sexy self up here 1n Heaven, and y0u get t0 be… wherever 1t 1s that y0u are.</p>
+                        <p>MM: Heaven s0 far 1s g0ld and sparkly, and has 0ddly 1mpress1ve cell serv1ce. 1t’s everyth1ng 1 h0ped f0r, really. 1 asked them t0 l0ck the d00rs t0 make sure y0u c0uldn’t get 1n.</p>
+                        <p>MM: But 1f 1 d1ed, and can st1ll f1nd the t1me t0 text y0u, then y0u’re runn1ng 0ut 0f excuses.</p>
+                        <p>MM: N0t that y0u’ve 0ffered any.</p>
+                        <p>MM: G0d, y0u 1nc0rr1g1ble layab0ut. Even M0r1ah 1s be1ng a better teammate than y0u, and all she had t0 d0 was k1ss my dead self. Wh1ch 1’m sure just has y0u all h0t and b0thered.</p>
+                        <p>MM: S0 y0u better shape the fuck up, because 1 really d0n’t want t0 g1ve M0r1ah any g0ld st1ckers f0r successfully f0ll0w1ng 0rders.</p>
+                        
+
+                        <p><span style="color: #ffffff;">-- silentSymphony</span> <span style="color: #252d89;">[SS]</span> <span style="color: #ffffff;">is an idle troll! --</span></p>
+
+                        <p>MM: Mmm.</p>
+                        <p>MM: 1 really th0ught y0u’d be back by n0w. The least y0u can d0 after gett1ng me k1lled 1s *resp0nd*. 0therw1se 1’m g01ng t0 get self-c0nsc10us ab0ut these walls 0f texts 1’ve sent.</p>
+                        <p>MM: “But 1neer1! 1 l0ve read1ng y0ur texts! 1 0nly d0n’t resp0nd because 1’m lazy and 1nc0ns1derate!”</p>
+                        <p>MM: 1 kn0w. And 1 at least apprec1ate the h0nesty. But self awareness 1s n0t an excuse \:E.</p>
+                        <p>MM: 1 tr1ed ask1ng Natwla 1f y0u were dead but he sa1d, and 1 qu0te, “damn b1tch h0w the fuck am 1 supp0sed t0 kn0w???”</p>
+                        <p>MM: Why exactly are y0u fr1ends, aga1n? 1s 1t a fam1l1ar1ty th1ng? Y0u just kn0w a guy f0r s0 l0ng that y0u can’t 1mag1ne cutt1ng h1m l00se?</p>
+                        <p>MM: 1 supp0se n0w w0uld be a really bad t1me t0 try and d1stance y0urself fr0m h1m, c0ns1der1ng that he’s already 1n the game. That makes, what, f1ve 0f us?</p>
+                        <p>MM: 1 say “us,” but let’s be h0nest w1th 0urselves- there 1s n0 us. There 1s 0nly The Team. And wh1le y0u and M0r1ah m1ght be w0rthless, 1 am determ1ned t0 lead R0yals t0 v1ct0ry. We w1ll crush the unwashed masses beneath 0ur very expens1ve and very sh1ny b00t. 1 bet 1’ll be the f1rst t0 g0 G0d T1er. Just 1mag1ne, me w1th superp0wers! 0 frabj0us day, call00h, callay.</p>
+                        <p>MM: N0w that 1 th1nk ab0ut 1t, 1 w0nder 1f y0ur ret1cence has anyth1ng t0 d0 w1th the game? D1d the f0rces 0f Derse capture y0u and l0ck y0u away w1th0ut y0ur ph0ne? My, that w0uld be t0rture.</p>
+                        <p>MM: 0r maybe y0u’re just really f0cused 0n that S0l1ta1re game.</p>
+                        <p>MM: Yeah, bet y0u d1dn’t th1nk 1’d make a sec0nd reference t0 S0l1ta1re. 1f 1 d0 1t a th1rd t1me, then 1t bec0mes h1lar10us.</p>
+                        <p>MM: G0d, 1 am s0 b0red.</p>
+
+                        <p><span style="color: #ffffff;">-- silentSymphony</span> <span style="color: #252d89;">[SS]</span> <span style="color: #ffffff;">is an idle troll! --</span></p>
+
+                        <p>MM: Status rep0rt: the yell0w 0ne and the green 0ne have successfully entered the Med1um.</p>
+                        <p>MM: (1 call them by the1r bl00d c0l0rs because 1 d0n’t respect them.)</p>
+                        <p>MM: Well, that’s n0t ent1rely true. Wasn’t the green 0ne 0n y0ur FLARP1ng team?</p>
+                        <p>MM: Yeah, see? 1 pay attent10n. 1 f0cus 0n the l1ves 0f my fr1ends.</p>
+                        <p>MM: Th0ugh 1 f1nd 1t hard t0 call y0u a fr1end when y0u D0N’T. ANSWER. Y0UR. PH0NE.</p>
+                        <p>MM: Meld1l w0uld never adm1t 1t 0ut l0ud, but he’s pretty 0n edge due t0 y0ur d1sappearance. 1 th1nk he m1ght be a l1ttle b1t 0f a c0ntr0l freak, 1n all h0nesty.</p>
+                        <p>MM: Y0u men always c0mpla1n ab0ut be1ng repressed, but y0u d0 1t t0 y0urselves! 1 d0n’t get 1t. H0w can keep1ng y0ur feel1ngs t0 y0urself all the t1me n0t eat away at y0u? 1f 1 tr1ed that, 1 th1nk 1’d expl0de 1nt0 a m1ll10n g0rge0us l1ttle p1eces.</p>
+                        <p>MM: 1 w0nder what happened t0 my b0dy. M0r1ah better n0t have captchal0gued 1t. G0d, 1 bet she d1d! She’s en0ugh 0f a l1ttle lunat1c t0 keep 1t as s0me k1nd 0f macabre t0ken.</p>
+                        <p>MM: L1ke she c0uld never k1ll me, s0 she has t0 l0rd 1t 0ver me that she has my b0dy 1n her 1nvent0ry. Sh0uld 1 ask her ab0ut 1t?</p>
+                        <p>MM: Actually, y0u kn0w what, 1 d0n’t care. Why g1ve her that sat1sfact10n.</p>
+                        <p>MM: 1f y0u’re al1ve, keep y0ur m0uth shut ab0ut th1s, 0kay?</p>
+                        <p>MM: “1neer1, why the fuck w0uld 1 care?”</p>
+                        <p>MM: There he 1s! That’s the P0rres we all kn0w and l0ve.</p>
+                        <p>MM: 1t w0uld be a really, really g00d j0ke 1f y0u ch0se n0w t0 resp0nd.</p>
+
+                        <p><span style="color: #ffffff;">-- silentSymphony</span> <span style="color: #252d89;">[SS]</span> <span style="color: #ffffff;">is an idle troll! --</span></p>
+
+                        <p>MM: Ugh.</p>
+                        <p>MM: F1ne, n0 m0re status updates. Y0u’re e1ther 1gn0r1ng me, 0r y0u’re dead and 1n Hell, and n0 am0unt 0f text1ng y0u w1ll change that. 1’ll hear fr0m y0u eventually. 0r 1 w0n’t.</p>
+                        <p>MM: Whatever.</p>
+
+                        <p><span style="color: #ffffff;">-- silentSymphony</span> <span style="color: #252d89;">[SS]</span> <span style="color: #ffffff;">is an idle troll! --</span></p>
+                        <p>   . </p>
+
+
+
+                        
+
+                    </div>
                 </div>
 
                 <div class="messageFrame smoothOpen" id="kolleiMessageFrame" style="background-color: transparent;">
                     <button class="back-button" onclick="closeMessage()"></button>
-                    <div class ="message" id="kolleiMessage" style="background-color: black; background-image: url('exporthere/full_kollei_isolated_text.png');"></div>
+                    <div class ="message app scrollable" id="kolleiMessage" style="background-color: black; color: #008282;">
+                        <p>PLACEHOLDER</p>
+
+                        <p>BR: !Hey ?What*s up ?You ready for this</p>
+                        <p>BR: .Brain n* Brawn is totally going to crush Royals .You don*t stand a chance</p>
+                        <p>BR: .Don*t let me discourage you though !I want a good, clean fight</p>
+                        <p>BR: ?Have you put any thought into your strategy .I think I*m going to get the best weapons as soon as possible, so I don*t have to worry about getting caught unawares</p>
+                        <p>BR: .I hope I don*t end up **prototyping** my lusus .The absolute last thing I need as a guide is a perpetually pissed off lizard, following me around all the time and pretending to give me advice</p>
+                        <p>BR: ?Have you thought about what you*re going to prototype at all .My blood pusher says it should be your bass, but I feel like that*s almost too personal .Gog knows I wouldn*t want a sentient chainsaw following me around all the time</p>
+                        <p>BR: .Not sure if I told you, but I got back into making ice sculptures .I*ve been working lately on this really cool one that*s based off of a sword Morrmo made .If I*m being honest, it*s way more awesome than the one he made, but I could never tell him that .His little dreams would shatter into a million pieces</p>
+
+                        <p><span style="color: #ffffff;">-- silentSymphony</span> <span style="color: #252d89;">[SS]</span> <span style="color: #ffffff;">is an idle troll! --</span></p>
+
+                        <p>BR: ?...Are you seriously going to ghost me again</p>
+                        <p>BR: .You can*t just keep doing this, Porres .You can*t ignore me for weeks on end and then hit me up acting like everything is fine and nothing*s wrong</p>
+                        <p>BR: I know you*re going through some shit, but I can only put up with it for so long before I get burned out.</p>
+                        <p>BR: .I really am not asking for a lot .It*s a very basic courtesy .And I have too much self-respect to trail after you like a pitiful barkbeast, wondering if Porres is going to be my good buddy today, or if he’s going to pretend I don*t exist</p>
+                        <p>BR: !And I don*t *want* to have a finite amount of goodwill towards you !I love hanging out with you and being your friend .But you make it so, so difficult, and I just</p>
+                        <p>BR: .I don*t know what to do</p>
+                        <p>BR: .I*m sorry .I know you already feel terrible pretty much always .I don*t want to add to that .I*ve never wanted to add to that</p>
+                        <p>BR: ?And you say I don*t, but then your actions show the opposite, and it*s like, what am I supposed to believe ???If I*m being such a burden and you would rather hang around with Meldil and Natwla all the time instead of me, why is it so hard for you to just come out and *say so*</p>
+                        <p>BR: ?What AM I to you</p>
+
+                        <p><span style="color: #ffffff;">-- silentSymphony</span> <span style="color: #252d89;">[SS]</span> <span style="color: #ffffff;">is an idle troll! --</span></p>
+
+                        <p>BR: .At the end of the night, it doesn*t matter .You*re on a different team .We could get through this entire game without ever seeing each other again, if that*s what you want</p>
+                        <p>BR: ?Am I going crazy ?Am I just that unbearably annoying to you, and you*d rather leave me in the dark because it*s easier than having a difficult conversation</p>
+                        <p>BR: .Ughhh</p>
+                        <p>BR: .Probably .Definitely</p>
+                        <p>BR: .I know you .And that*s why this hurts so fucking much</p>
+                        <p>BR: .But I can*t keep doing this .I can*t keep agonizing over whether you*re okay and whether there*s anything I can do to help it</p>
+                        <p>BR: .So do what you want .I have a game to focus on entering .And while it would be nice to pick your thinkpan for a bit over what I should prototype and what cool fun things I should alchemize, that clearly is not going to happen</p>
+                        <p>BR: .Fix your shit ?And if you do, and realize that you don*t want to lose me .You better come up with one hell of an apology</p>
+                        <p><span style="color: #ffffff;">-- silentSymphony</span> <span style="color: #252d89;">[SS]</span> <span style="color: #ffffff;">is an idle troll! --</span></p>
+                        <p>   . </p>
+
+
+                    </div>
                 </div>      
 
                 <div class="messageFrame smoothOpen" id="natlwaMessageFrame" style="background-color: transparent;">
                     <button class="back-button" onclick="closeMessage()"></button>
-                    <div class ="message" id="natlwaMessage" style="background-color: black; background-image: url('exporthere/natwla_text_iso.png');"></div>
+                    <div class ="message app scrollable" id="natlwaMessage" style="background-color: black; ">
+                        <p><span style="color: #13787f;">BS: wh4t up fuck5tick</span></p>
+                        <p><span style="color: #13787f;">BS: wh4t up fuck5tick</span></p>
+                        <p><span style="color: #252d89;">SS: helo natwla my koolest and most wonderful frend</span></p>
+                        <p><span style="color: #252d89;">SS: thank u for adressing me by my formal title</span></p>
+                        <p><span style="color: #252d89;">SS: wat do u want</span></p>
+                        <p><span style="color: #13787f;">BS: 0k4y 500000000000000000 n0 e45y w4y t0 54y thi5</span></p>
+                        <p><span style="color: #13787f;">BS: let5 54y hyp0thetic4lly</span></p>
+                        <p><span style="color: #252d89;">SS: hypothetikaly</span></p>
+                        <p><span style="color: #13787f;">BS: i were t0 be flu5hed f0r 0ne 0f 0ur</span></p>
+                        <p><span style="color: #13787f;">BS: HYP0THETIC4L</span></p>
+                        <p><span style="color: #13787f;">BS: mutu4l 4550ci4te5?</span></p>
+                        <p><span style="color: #252d89;">SS: is it me</span></p>
+                        <p><span style="color: #13787f;">BS: n0.</span></p>
+                        <p><span style="color: #252d89;">SS: are you sure?</span></p>
+                        <p><span style="color: #13787f;">BS: it'5 n0t y0u.</span></p>
+                        <p><span style="color: #252d89;">SS: realy realy sure?</span></p>
+                        <p><span style="color: #13787f;">BS: y0u kn0w wh4t m4ybe i will t4lk t0 meldil 4b0ut thi5 in5te4d</span></p>
+                        <p><span style="color: #252d89;">SS: no no no no no now i am invested</span></p>
+                        <p><span style="color: #252d89;">SS: prosess of elimination</span></p>
+                        <p><span style="color: #252d89;">SS: you LIKE LIKE KOLLEI</span></p>
+                        <p><span style="color: #13787f;">BS: I 5WEAR T0 G0G IF Y0U S4Y 4NYTHING T0 HER!!!!!!</span></p>
+                        <p><span style="color: #252d89;">SS: yu want advise</span></p>
+                        <p><span style="color: #13787f;">BS: ye5 i w4nt 4dvice</span></p>
+                        <p><span style="color: #13787f;">BS: i d0n't think i kn0w h0w t0 m4ke 4 m0ve 0n her with0ut being 0verly 4nt4g0ni5tic?</span></p>
+                        <p><span style="color: #13787f;">BS: which w0uld be t0t4lly fine if i were bl4ck t0w4rd5 her but um</span></p>
+                        <p><span style="color: #13787f;">BS: i 4m n0t</span></p>
+                        <p><span style="color: #252d89;">SS: wat triggered this sudden realization?</span></p>
+                        <p><span style="color: #13787f;">BS: i d0n't fucking kn0w, 5he'5 pretty 4nd 5he yell5 4t me?</span></p>
+                        <p><span style="color: #13787f;">BS: i like riling her up but i d0n't w4nt t0, i gue55, be 4 jerk 4b0ut it</span></p>
+                        <p><span style="color: #13787f;">BS: like in 4 fun "will they, w0n't they" w4y, n0t 4 "thi5 i5 re4lly fucked up 4nd h4rd t0 w4tch" w4y</span></p>
+                        <p><span style="color: #13787f;">BS: d0 y0u think there'5 4ny ch4nce 5he c0uld like me b4ck</span></p>
+                        <p><span style="color: #13787f;">BS: i ju5t</span></p>
+                        <p><span style="color: #13787f;">BS: i think 5he'5 c00l 4nd fun 4nd i re4lly like the per50n4l gr0wth 5he'5 d0ne recently 4nd i d0n't w4nt t0 me55 it up</span></p>
+                        <p><span style="color: #252d89;">SS: gog man dont word it like that</span></p>
+                        <p><span style="color: #13787f;">BS: like wh4t???</span></p>
+                        <p><span style="color: #252d89;">SS: "hey gurl i saw u put on makeup for the first time and now i got the hots for u, pls keep changing everything about urself"</span></p>
+                        <p><span style="color: #13787f;">BS: 0k4y well when y0u put it like th4t 0f c0ur5e it m4ke5 me 50und 5h4ll0w!</span></p>
+                        <p><span style="color: #252d89;">SS: yea bekause it is shalo</span></p>
+                        <p><span style="color: #13787f;">BS: i d0n't kn0w why i th0ught y0u'd be helpful 4t 4ll.</span></p>
+                        <p><span style="color: #252d89;">SS: no ofense but yea its not like i hav ever had a matesprit</span></p>
+                        <p><span style="color: #252d89;">SS: hey yu got this! just be onest. be real. girls love it wen yu keep it real</span></p>
+                        <p><span style="color: #252d89;">SS: and yu ar a total catc! yu play drums, yu wear shades, yu kno a lot about birds and 2D platformers and the stok market</span></p>
+                        <p><span style="color: #252d89;">SS: i bet that, if yu dont get al agresive and up in her fase, she wil realize she is flushed for yu to</span></p>
+                        <p><span style="color: #13787f;">BS: hmm.</span></p>
+                        <p><span style="color: #13787f;">BS: 0k4y, th4nk5 m4n</span></p>
+                        <p><span style="color: #13787f;">BS: 5till g0nn4 45k meldil f0r help t00 th0ugh, i re4lly d0n't w4nt t0 bungle thi5</span></p>
+                        <p><span style="color: #13787f;">BS: 4nd y0u c4n't 54y 4nything t0 her!!!! n0t until i'm re4dy!!!!!</span></p>
+                        <p><span style="color: #252d89;">SS: my lips ar sealed good buddy</span></p>
+                        <p><span style="color: #13787f;">BS: th4nk5.</span></p>
+
+                        <p><span style="color: #13787f;">-- brazenScammer [BS] is an idle troll! --</span></p>
+
+                        <p><span style="color: #252d89;">SS: o and maybe cange yur username?</span></p>
+                        <p>   . </p>
+
+
+                    </div>
                 </div>      
 
                 <div class="messageFrame smoothOpen" id="meldilMessageFrame" style="background-color: transparent;">
                     <button class="back-button" onclick="closeMessage()"></button>
-                    <div class ="message" id="meldilMessage" style="background-color: black; background-image: url('exporthere/meldil_text_iso.png');"></div>
+                    <div class ="message app scrollable" id="meldilMessage" style="background-color: black; ">
+                        <p><span style="color: #252d89;">SS: <a style="color: #0000EE; text-decoration: underline; cursor: pointer;">placeholder</a></span></p>
+                        <p><button id="discorpseSongLink" style="color: #252d89; background: none; border: none; text-decoration: underline; cursor: pointer; font-family: inherit; font-size: inherit;">SS: sparseThing.mp3</button>
+                        </p>                        
+                        <p><span style="color: #252d89;">SS: thots?</span></p>
+                        <p><span style="color: #0f3b6e;">PP: Nice</span></p>
+                        <p><span style="color: #252d89;">SS: ok but like wat kind of nise</span></p>
+                        <p><span style="color: #252d89;">SS: meldil?</span></p>
+                        <p><span style="color: #252d89;">SS: realy looking for sum valuabl feedback here</span></p>
+                        <p><span style="color: #0f3b6e;">PP: Um</span></p>
+                        <p><span style="color: #0f3b6e;">PP: Idk what to~ tell yo~u bro~, it's nice</span></p>
+                        <p><span style="color: #0f3b6e;">PP: I like ho~w it so~unds</span></p>
+                        <p><span style="color: #252d89;">SS: yu ar killing me</span></p>
+                        <p><span style="color: #252d89;">SS: is it the kind of banger that wuld hav millions of fans frothing at the fangs again or not</span></p>
+                        <p><span style="color: #252d89;">SS: my last post only got 400k likes this is important :(</span></p>
+                        <p><span style="color: #0f3b6e;">PP: Lmao~ drama empress</span></p>
+                        <p><span style="color: #252d89;">SS: :((</span></p>
+                        <p><span style="color: #252d89;">SS: for real tho even if we kant play together any mor i stil want to keep kreating musik</span></p>
+                        <p><span style="color: #0f3b6e;">PP: Go~ fo~r it man</span></p>
+                        <p><span style="color: #0f3b6e;">PP: Idk I just do~n't have any real suggestio~ns, so~rry</span></p>
+                        <p><span style="color: #0f3b6e;">PP: But yo~u still have the gift, if that's what yo~u're wo~rried abt?</span></p>
+                        <p><span style="color: #252d89;">SS: no but thanks ig</span></p>
+                        <p><span style="color: #252d89;">SS: if i find out yu make a solo album without me tho i wil kiiiiiiiilllllllll yuuuuuuuuuu</span></p>
+                        <p><span style="color: #0f3b6e;">PP: Haha sure yo~u will</span></p>
+                        <p><span style="color: #252d89;">SS: let me kno next time yur free and we kan jam</span></p>
+                        <p><span style="color: #0f3b6e;">PP: Sure</span></p>
+
+                        <p><span style="color: #0f3b6e;">-- poseidonsPlayboy [PP] is an idle troll! --</span></p>
+
+                        <p><span style="color: #252d89;">SS: <a style="color: #0000EE; text-decoration: underline; cursor: pointer;">bitch.mp3</a></span></p>
+                        <p>   . </p>
+                        <p>   . </p>
+
+
+
+                    </div>
                 </div>      
 
                 <div class="app smoothOpen discorpse" id="discorpse" style="background-color:rgb(27, 21, 21);">
-                    <button class="back-button" onclick="closeApp()"></button>
                     <div class="logo">
                         <img src="exporthere\\discorpse.png " >
                         <hr class="discorpseLine"> 
                     </div>
 
                     <div class = "discorpseUser">   
-                        <button id="ineeriButton" class="image-button" style="background-image: url('exporthere\\ineeri_icon_iso.png');  --newbg: url('exporthere\\ineeri_icon_gray.png')" onclick="openMessage('ineeriMessage','ineeriMessageFrame',4050), changeBackground(this)"></button>
+                        <button id="ineeriButton" class="image-button" style="background-image: url('exporthere\\ineeri_icon_iso.png');  --newbg: url('exporthere\\ineeri_icon_gray.png')" onclick="openMessage('ineeriMessage','ineeriMessageFrame'), changeBackground(this)"></button>
                         <p style="color:purple;"> MagnificentlyMercurial  </p>
                     </div>
 
                     <div class = "discorpseUser">   
-                        <button id="kolleiButton" class="image-button" style="background-image: url('exporthere\\kollei_icon_iso.png');  --newbg: url('exporthere\\kollei_icon_gray.png')" onclick="openMessage('kolleiMessage','kolleiMessageFrame',1100), changeBackground(this)"></button>
+                        <button id="kolleiButton" class="image-button" style="background-image: url('exporthere\\kollei_icon_iso.png');  --newbg: url('exporthere\\kollei_icon_gray.png')" onclick="openMessage('kolleiMessage','kolleiMessageFrame'), changeBackground(this)"></button>
                         <p style="color:purple;"> BriskRanger  </p>
 
                     </div>
@@ -661,18 +977,46 @@
                     </div>
 
                     <div class = "discorpseUser">   
-                        <button id="natlwaButton" class="image-button" style="background-image: url('exporthere\\natlwa_icon_gray.png');" onclick="openMessage('natlwaMessage','natlwaMessageFrame',1100)"></button>
+                        <button id="natlwaButton" class="image-button" style="background-image: url('exporthere\\natwla_icon_gray.png');" onclick="openMessage('natlwaMessage','natlwaMessageFrame',1100)"></button>
                         <p style="color:purple;"> BlankScanner  </p>
 
                     </div>
                 </div>
                 
-                <div class="app smoothOpen" id="garageband" style="background-color:dimgrey;">
-                    <button class="back-button" onclick="closeApp()"></button>
+                <div class="app smoothOpen" id="garageband";>
+                    <img src="exporthere\\piano.jpg">
+                    <img src="exporthere\\guitar.png">
+                    <p>Your free trial of troll garageband has expired.</p>
+
+                </div>
+                <div class="app smoothOpen" id="files";>
+
+                    <div class="music-container" id="music-container">
+                
+                    </div>
+                    <div id="controls">
+                        <button id="play-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" viewBox="0 0 60 60" xml:space="preserve">
+                                <g>
+                                    <path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30   c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15   C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107z"/>
+                                    <path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M30,58C14.561,58,2,45.439,2,30   S14.561,2,30,2s28,12.561,28,28S45.439,58,30,58z"/>
+                                </g>
+                                </svg>
+                        </button>
+                        <button id="pause-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" viewBox="0 0 60 60" xml:space="preserve">
+                                <g>
+                                    <path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M30,58C14.561,58,2,45.439,2,30   S14.561,2,30,2s28,12.561,28,28S45.439,58,30,58z"/>
+                                    <path d="M33,46h8V14h-8V46z M35,16h4v28h-4V16z"/>
+                                    <path d="M19,46h8V14h-8V46z M21,16h4v28h-4V16z"/>
+                                </g>
+                                </svg>
+                        </button>
+                      </div>
+
                 </div>
 
                 <div class="app scrollable smoothOpen snapchat" id="snapchat">
-                    <button class="back-button" onclick="closeApp()" style="position: fixed;"></button>
                     <div class="snap">
                         <img src="exporthere\\snap_fixed_1.png">
                         <div class="snapHeader" > 
@@ -729,7 +1073,7 @@
                             <span class="timestamp">74h</span>
                             <span class="like-button"></span>
                             <div class="comment-body">
-                                <p>wym she looks great her face isn't even in it</p>  
+                                <p>wym s#e looks great #er face isn't even in it</p>  
                             </div>
                         </div>
                         <div class = 'comment'>
@@ -737,7 +1081,7 @@
                             <span class="timestamp">74h</span>
                             <span class="like-button"></span>
                             <div class="comment-body">
-                                <p>brad lay the fuck off people can look great from the back</p>  
+                                <p>braaad lay the fuck off people can look great from the back</p>  
                             </div>
                         </div>
                         <div class = 'comment'>
@@ -746,6 +1090,22 @@
                             <span class="like-button"></span>
                             <div class="comment-body">
                                 <p>ok sry</p>  
+                            </div>
+                        </div>
+
+                        <div class = 'comment'>
+                            <span class="username" style="color: #9F0018;">!!smilesf6rmiles!!</span>
+                            <span class="timestamp">74h</span>
+                            <div class="like-button"></div>
+                            <div class ="dropdown">
+                                <p>This post violates the Troll Instagram<a style="color: #0000EE; text-decoration: underline; cursor: pointer;"> hate speech policies.</a></span></p>    
+                                <p>Reason: Insufficient Hate</p>    
+                                <button class="dropdown-button">Click To See Blocked Content</button>
+                                <div class="dropdown-menu">   
+                                    <div class="comment-body">
+                                        <p style="font-family: Arial, Helvetica, sans-serif;background-color:whitesmoke;">please 8e safe 6u7 7here!!! sending l67s 6f l6ve and 7h6ugh7s and prayers!!!!!</p>  
+                                    </div>                   
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -772,7 +1132,7 @@
                             <span class="timestamp">73h</span>
                             <div class="like-button"></div>
                             <div class="comment-body">
-                                <p>My lusus won't let me :h. Is it cool out there?</p>  
+                                <p>My luSus won't let me :h. Is it cool out there?</p>  
                             </div>
                         </div>
                         <div class = 'comment'>
@@ -798,7 +1158,7 @@
                                 <span class="timestamp">73h</span>
                                 <div class="like-button"></div>
                                 <div class="comment-body">
-                                    <p>Why are you making fun of me for posting memes when you're doing the exact same thing?</p>  
+                                    <p>Why are you making fun of me for poSting memeS when you're doing the exact Same thing?</p>  
                                 </div>
                             </div>
                             <div class = 'comment'>
@@ -829,7 +1189,7 @@
                             <span class="timestamp">74h</span>
                             <div class="like-button"></div>
                             <div class="comment-body">
-                                <p>aw girl :&#40; Idk if you're feeling up to it but me and Valinx are gonna go kill Mikiol at his hive if u wanna join </p>  
+                                <p>awW girl :&#40; Idk if you're feeling up to it but me and Valinx are gonna go kill Mikiol at his hive if u wWanna join </p>  
                             </div>
                         </div>
                         <div class = 'comment'>
@@ -856,9 +1216,34 @@
                     <div class="snap">
                         <img src="exporthere\\snap_fixed_6.png">
                         <div class="snapHeader" > 
-                            <span class="username" style="color: #ddcf12;">WRITE SHIT HERE LATER</span>
+                            <span class="username" style="color: #ddcf12;">psionicBACKLLASH</span>
                             <span class="timestamp">74h</span>
                             <div class="like-button"></div>
+                            <span class="likeCount">18</span>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #ddcf12;">psionicBACKLLASH</span>
+                            <span class="timestamp">73h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>rough day to be a llowbllood ngll </p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color:green;">xxJadeVibez</span>
+                            <span class="timestamp">73h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>¥ou can’t even drive anywa¥ </p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #ddcf12;">psionicBACKLLASH</span>
+                            <span class="timestamp">73h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>not the point fuck you </p>  
+                            </div>
                         </div>
                     </div>
                     <div class="snap">
@@ -867,13 +1252,14 @@
                             <span class="username" style="color: #000056;">BigtimeHits</span>
                             <span class="timestamp">73h</span>
                             <div class="like-button"></div>
+                            <span class="likeCount">30</span>
                         </div>
                         <div class = 'comment'>
                             <span class="username" style="color: #2b0057;">RunFromBratos</span>
                             <span class="timestamp">73h</span>
                             <div class="like-button"></div>
                             <div class="comment-body">
-                                <p>TBH these storylines keep getting stupider.</p>  
+                                <p>T_B_H these storylines keep getting stupider.</p>  
                             </div>
                         </div>
                         <div class = 'comment'>
@@ -881,7 +1267,7 @@
                             <span class="timestamp">73h</span>
                             <div class="like-button"></div>
                             <div class="comment-body">
-                                <p>Nah, it's peak. Lowblood pits can't match this.</p>  
+                                <p>IT'S PEAK! LOWBLOOD PITS CAN'T MATCH THIS!</p>  
                             </div>
                         </div>
                     </div>
@@ -906,23 +1292,78 @@
                             <span class="timestamp">73h</span>
                             <div class="like-button"></div>
                             <div class="comment-body">
-                                <p>Don't rush me.</p>  
+                                <p>D0n't rush me.</p>  
                             </div>
                         </div>
                     </div>
+                    <div class="snap">
+                        <img src="exporthere\\snap_fixed_9.png">
+                        <div class="snapHeader" > 
+                            <span class="username" style="color: #9F0018;">!!smilesf6rmiles!!</span>
+                            <span class="timestamp">77h</span>
+                            <div class="like-button"></div>
+                            <span class="likeCount">4</span>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #000056;">N**kIntheM*rning</span>
+                            <span class="timestamp">77h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>y*ur lusus is h*t</p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #9F0018;">!!smilesf6rmiles!!</span>
+                            <span class="timestamp">77h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>I'm g6ing t6 ch66se 76 7ake 7ha7 as a c6mplimen7!</p>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="snap">
+                        <img src="exporthere\\snap_fixed_11.png">
+                        <div class="snapHeader" > 
+                            <span class="username" style="color: #2b0057;">PoseidonsPlayboy</span>
+                            <span class="timestamp">88h</span>
+                            <div class="like-button"></div>
+                            <span class="likeCount">16,873</span>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #000056;">PoseidonsPlayboy</span>
+                            <span class="timestamp">88h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>New Track "Dro~nes Up" o~ut no~w. Get the so~nggrub while it's still warm!</p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #2b0057;">MagnificentlyMercurial</span>
+                            <span class="timestamp">86h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>Everyb0dy l1sten t0 th1s b0y's album. 1 was the g1rl scr0ll1ng her ph0ne 1n the stud10, wh1ch 1'm t0ld makes me 0ff1c1ally a pr0ducer. S0 #1neer1 Nat10n stream my debut ;)</p>  
+                            </div>
+                        </div>
+                        <div class = 'comment'>
+                            <span class="username" style="color: #000056;">PoseidonsPlayboy</span>
+                            <span class="timestamp">86h</span>
+                            <div class="like-button"></div>
+                            <div class="comment-body">
+                                <p>co~uldn't have do~ne it witho~ut yo~u &lt;3.</p>  
+                            </div>
+                        </div>  
+                    </div>
                 </div>
                 <div class="app smoothOpen photos" id="photos">
-                    <button class="back-button" onclick="closeApp()"></button>
                 </div>      
 
                 <div class="app smoothOpen meditation" id="meditation">
-                    <button class="back-button" onclick="closeApp()"></button>  
                     <div id="textDisplay"></div>
                     <img class="smoothOpen" src="exporthere\\meditation_iso.png" style="top:500px; right:290px;" height="30%" width="30%" > 
                 </div>
 
                 <div class="app smoothOpen lighter" id="lighter">
-                    <button class="back-button" onclick="closeApp()"></button>  
                     <img src="exporthere\\lighter_gif.gif" style="position:absolute; top:400px; right:200px;" height="400" width="400" > 
 
 
@@ -947,6 +1388,17 @@
     <audio id="g5" src="Harp Notes/g5.wav" preload="auto"></audio>
     <audio id="calmMusic" src="Other Audio/outer wilds.mp3" preload="auto"></audio>
     <audio id="desertWind" src="Other Audio/desert wind.mp3" preload="auto"></audio>
+    <audio id="bitcrusher" src="Other Audio/cool bitcrusher poly.mp3" preload="auto"></audio>
+    <audio id="catThing" src="Other Audio/nepetaquest.mp3" preload="auto"></audio>
+    <audio id="sparseThing" src="Other Audio/rain world.mp3" preload="auto"></audio>
+    <audio id="pianoThing" src="Other Audio/cybele.mp3" preload="auto"></audio>
+    <audio id="otherPianoThing" src="Other Audio/valhalla.mp3" preload="auto"></audio>
+    <audio id="coolBassChords" src="Other Audio/cool bass chords.mp3" preload="auto"></audio>
+
+
+
+
+
 
 
     <script src="node_modules/p5/lib/p5.js"></script>
