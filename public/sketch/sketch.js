@@ -617,7 +617,8 @@ setMessageFrameBackground('meldilMessageFrame', 'exporthere/meldil_red_bg.png');
 //closes app or message if x key is pressed, 
 document.addEventListener('keydown', (event) => { 
   if ((event.key === 'x' || event.key === 'X')&& !currentMessage) { closeApp()}
-  else(closeMessage());
+  else if ((event.key === 'x' || event.key === 'X')&& currentMessage) { closeMessage()}
+
 });
 
 
