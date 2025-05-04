@@ -335,7 +335,7 @@ class HarpString {
     this.initialAmplitude = 20; // Initial amplitude of the wave
     this.amplitude = this.initialAmplitude;
     this.frequency = 2; // Frequency of the wave
-    this.damping = 0.9999; // Damping factor to reduce amplitude over time
+    this.damping = 0.95; // Damping factor to reduce amplitude over time
   }
 
   display() {
@@ -350,14 +350,19 @@ class HarpString {
         let time = (millis() - this.pluckTime) / 200;
         let normalizedPosition = (i + this.height / 2) / this.height; // Normalize position between 0 and 1
         offset = this.amplitude * sin(TWO_PI* this.frequency * i + time * TWO_PI) * (1 - normalizedPosition) * normalizedPosition;
-        this.amplitude *= this.damping; // Reduce amplitude over time
-        if (this.amplitude < 0.1) {
-          this.isPlucked = false;
-        }
       }
       vertex(this.x + offset, this.y + i);
     }
+    
     endShape();
+
+    if (this.isPlucked) {
+      this.amplitude *= this.damping;
+      if (this.amplitude < 0.1) {
+        console.log("pluck over");
+        this.isPlucked = false;
+      }
+    }
   }
 
   calculateAmplitude() {
